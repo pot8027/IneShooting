@@ -143,6 +143,18 @@ public class TokenController : TokenProperty
     }
 
     /// <summary>
+    /// スケール値を設定.
+    /// </summary>
+    /// <param name="x">The x coordinate.</param>
+    /// <param name="y">The y coordinate.</param>
+    public void SetScale (float x, float y)
+    {
+      Vector3 scale = transform.localScale;
+      scale.Set (x, y, (x + y) / 2);
+      transform.localScale = scale;
+    }
+
+    /// <summary>
     /// 画面外か判定
     /// </summary>
     /// <returns><c>true</c>, if outside was ised, <c>false</c> otherwise.</returns>

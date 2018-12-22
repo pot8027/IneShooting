@@ -7,6 +7,7 @@ TextureImporter:
     21300004: all_2
     21300006: Enemy
     21300008: RedShot
+    21300010: Particle
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -195,6 +196,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 96cf229d95d97472ea3a60af71f13cf5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Particle
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 898
+        width: 120
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 968fa797d51244b69a9642212c618d59
       vertices: []
       indices: 
       edges: []

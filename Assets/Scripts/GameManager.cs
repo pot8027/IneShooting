@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     {
         // 各インスタンス生成
         //Player.InitTokenManager(1);
-        RedShot.InitTokenManager(256);
+        RedShot.InitTokenManager(4);
+        Particle.InitTokenManager(512);
     }
 
     // Update is called once per frame

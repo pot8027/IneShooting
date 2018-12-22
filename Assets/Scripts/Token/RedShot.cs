@@ -51,6 +51,12 @@ public class RedShot : TokenController
         }
     }
 
+    public override void Vanish()
+    {
+        Particle p = Particle.Add(X, Y, 0, 0);
+        base.Vanish();
+    }
+
     /// <summary>
     /// 衝突時イベント
     /// </summary>
