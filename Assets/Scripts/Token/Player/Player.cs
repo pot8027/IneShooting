@@ -58,7 +58,7 @@ public class Player : TokenController
 
         if (Input.GetKey(KeyCode.JoystickButton1))
         {
-            RedShot.Add(X, Y, 0.0f, 10.0f);
+            PlayerShot.Add(X, Y, 0.0f, 10.0f);
         }
     }
 

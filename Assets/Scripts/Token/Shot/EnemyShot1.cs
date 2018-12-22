@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedShot : TokenController
+public class EnemyShot1 : TokenController
 {
     /// <summary>
     /// プレハブ名
     /// </summary>
-    private static readonly string PREFUB_NAME = "RedShot";
+    private static readonly string PREFUB_NAME = "EnemyShot1";
 
     /// <summary>
     /// インスタンスリスト
     /// </summary>
-    private static TokenManager<RedShot> _parent = null;
+    private static TokenManager<EnemyShot1> _parent = null;
 
     /// <summary>
     /// インスタンスリストを作成します
@@ -20,7 +20,7 @@ public class RedShot : TokenController
     /// <param name="size">リストサイズ</param>
     public static void InitTokenManager(int size)
     {
-        _parent = new TokenManager<RedShot>(PREFUB_NAME, size);
+        _parent = new TokenManager<EnemyShot1>(PREFUB_NAME, size);
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public class RedShot : TokenController
     /// <param name="y">The y coordinate.</param>
     /// <param name="direction">Direction.</param>
     /// <param name="speed">Speed.</param>
-    public static RedShot Add(float x, float y, float direction, float speed)
+    public static EnemyShot1 Add(float x, float y, float direction, float speed)
     {
         if (_parent == null)
         {
@@ -65,14 +65,12 @@ public class RedShot : TokenController
     {
         string layerName = LayerMask.LayerToName(collision.gameObject.layer);
 
-        // 敵
-        if (LayerConstant.ENEMY.Equals(layerName))
+        // プレイヤ
+        if (LayerConstant.PLAYER.Equals(layerName))
         {
-            Enemy e = collision.gameObject.GetComponent<Enemy>();
-            e.AddDamage(1);
-
+            Player p = collision.gameObject.GetComponent<Player>();
+            p.DestroyObj();
             Vanish();
         }
     }
 }
-
