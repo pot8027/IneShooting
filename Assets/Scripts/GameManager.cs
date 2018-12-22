@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     {
         // 各インスタンス生成
         //Player.InitTokenManager(1);
-        RedShot.InitTokenManager(4);
+        RedShot.InitTokenManager(40);
         Particle.InitTokenManager(512);
     }
 
