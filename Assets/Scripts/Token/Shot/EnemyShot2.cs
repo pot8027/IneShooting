@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShot1 : EnemyShot
+public class EnemyShot2 : EnemyShot
 {
     /// <summary>
     /// プレハブ名
     /// </summary>
-    private static readonly string PREFUB_NAME = "EnemyShot1";
+    private static readonly string PREFUB_NAME = "EnemyShot2";
 
     /// <summary>
     /// インスタンスリスト
     /// </summary>
-    private static TokenManager<EnemyShot1> _parent = null;
+    private static TokenManager<EnemyShot2> _parent = null;
 
     /// <summary>
     /// インスタンスリストを作成します
@@ -20,7 +20,7 @@ public class EnemyShot1 : EnemyShot
     /// <param name="size">リストサイズ</param>
     public static void InitTokenManager(int size)
     {
-        _parent = new TokenManager<EnemyShot1>(PREFUB_NAME, size);
+        _parent = new TokenManager<EnemyShot2>(PREFUB_NAME, size);
     }
 
     /// <summary>
@@ -31,13 +31,25 @@ public class EnemyShot1 : EnemyShot
     /// <param name="y">The y coordinate.</param>
     /// <param name="direction">Direction.</param>
     /// <param name="speed">Speed.</param>
-    public static EnemyShot1 Add(float x, float y, float direction, float speed)
+    public static EnemyShot2 Add(float x, float y, float direction, float speed)
     {
         if (_parent == null)
         {
             return null;
         }
-        return _parent.Add(x, y, direction, speed);
+
+        // コルーチンが設定されない場合があるので
+        EnemyShot2 e = _parent.Add(x, y, direction, speed);
+        e.SetCoroutinueID(1);
+        return e;
+    }
+
+    /// <summary>
+    /// Start this instance.
+    /// </summary>
+    private void Start()
+    {
+        SetCoroutinueID(1);
     }
 
     /// <summary>
@@ -49,12 +61,6 @@ public class EnemyShot1 : EnemyShot
         {
             Vanish();
         }
-    }
-
-    public override void Vanish()
-    {
-        Particle p = Particle.Add(X, Y, 0, 0);
-        base.Vanish();
     }
 
     /// <summary>
@@ -71,6 +77,45 @@ public class EnemyShot1 : EnemyShot
             Player p = collision.gameObject.GetComponent<Player>();
             p.DestroyObj();
             Vanish();
+        }
+    }
+
+    /// <summary>
+    /// コルーチン１
+    /// </summary>
+    /// <returns>The pdate1.</returns>
+    IEnumerator IEUpdate1()
+    {
+        const float ROT = 5.0f;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(0.02f);
+
+            float dir = Direction;
+            float aim = GetTargetAim();
+            float delta = Mathf.DeltaAngle(dir, aim);
+
+            if (Mathf.Abs(delta) < ROT)
+            {
+
+            }
+            else if (delta > 0)
+            {
+                dir += ROT;
+            }
+            else
+            {
+                dir -= ROT;
+            }
+
+            SetVelocity(dir, Speed);
+            Angle = dir;
+
+            if (IsOutside())
+            {
+                Vanish();
+            }
         }
     }
 }

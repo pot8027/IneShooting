@@ -18,4 +18,14 @@ public static class LayerConstant
     /// レイヤー名：プレイヤーショット
     /// </summary>
     public static readonly string PLAYER_SHOT = "PlayerShot";
+
+    /// <summary>
+    /// レイヤー名：敵ショット
+    /// </summary>
+    public static readonly string ENEMY_SHOT = "EnemyShot";
+
+    /// <summary>
+    /// レイヤー名：敵ショット破壊可能
+    /// </summary>
+    public static readonly string ENEMY_SHOT_BREAKABLE = "EnemyShotBreakable";
 }

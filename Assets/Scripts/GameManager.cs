@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // 各インスタンス生成
-        //Player.InitTokenManager(1);
-        PlayerShot.InitTokenManager(16);
+        PlayerShot.InitTokenManager(32);
         EnemyShot1.InitTokenManager(64);
+        EnemyShot2.InitTokenManager(64);
         Particle.InitTokenManager(512);
     }
 

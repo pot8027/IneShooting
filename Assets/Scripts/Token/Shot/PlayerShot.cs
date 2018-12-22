@@ -72,6 +72,12 @@ public class PlayerShot : TokenController
             e.AddDamage(1);
 
             Vanish();
+        } else if (LayerConstant.ENEMY_SHOT_BREAKABLE.Equals(layerName))
+        {
+            EnemyShot2 e = collision.gameObject.GetComponent<EnemyShot2>();
+            e.Vanish();
+
+            Vanish();
         }
     }
 }

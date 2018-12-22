@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : TokenController
+public class EnemyShot : TokenController
 {
     /// <summary>
     /// プレイヤー
@@ -23,70 +23,6 @@ public class Enemy : TokenController
         StopCoroutine("IEUpdate" + _currentCoroutinueID);
         _currentCoroutinueID = id;
         StartCoroutine("IEUpdate" + _currentCoroutinueID);
-    }
-
-    /// <summary>
-    /// ヒットポイント
-    /// </summary>
-    private int _hp = 1;
-    protected int HP
-    {
-        set { _hp = value; }
-        get { return _hp; }
-    }
-
-    /// <summary>
-    /// ダメージを与える
-    /// </summary>
-    /// <param name="damage">Damage.</param>
-    public void AddDamage(int damage)
-    {
-        HP -= damage;
-    }
-
-    /// <summary>
-    /// 敵キャラの最大HPを取得
-    /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
-    /// </summary>
-    /// <returns>The hp.</returns>
-    protected virtual int GetMaxHP()
-    {
-        return 50;
-    }
-
-    /// <summary>
-    /// 撃破時のスコアを取得
-    /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
-    /// </summary>
-    /// <returns>The score.</returns>
-    protected virtual int GetScore()
-    {
-        return 0;
-    }
-
-    /// <summary>
-    /// Start this instance.
-    /// </summary>
-    protected void Start()
-    {
-        HP = GetMaxHP();
-        SetCoroutinueID(1);
-    }
-
-    /// <summary>
-    /// Update this instance.
-    /// </summary>
-    protected void Update()
-    {
-        // ヒットポイントがなくなっていれば消えて終了。
-        if (HP <= 0)
-        {
-            // TODO:スコア追加
-            // TODO:消滅時パーティクルなど
-
-            Destroy(gameObject);
-            return;
-        }
     }
 
     /// <summary>

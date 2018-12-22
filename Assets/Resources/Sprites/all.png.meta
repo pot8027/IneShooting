@@ -10,6 +10,7 @@ TextureImporter:
     21300010: Particle
     21300012: pudding
     21300014: BlueShot
+    21300016: EnemyShot2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -251,13 +252,33 @@ TextureImporter:
         width: 24
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 7b210c9d8da484de09a0d6749969350a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyShot2
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 673
+        width: 102
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 9, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d597739b79ba485ca5810490db52188
       vertices: []
       indices: 
       edges: []
