@@ -1,0 +1,21 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class LayerConstant
+{
+    /// <summary>
+    /// レイヤー名：プレイヤー
+    /// </summary>
+    public static readonly string PLAYER = "Player";
+
+    /// <summary>
+    /// レイヤー名：敵
+    /// </summary>
+    public static readonly string ENEMY = "Enemy";
+
+    /// <summary>
+    /// レイヤー名：プレイヤーショット
+    /// </summary>
+    public static readonly string PLAYER_SHOT = "PlayerShot";
+}
