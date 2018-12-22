@@ -63,7 +63,7 @@ public class RedShot : TokenController
         if (LayerConstant.ENEMY.Equals(layerName))
         {
             Enemy e = collision.gameObject.GetComponent<Enemy>();
-            e.Vanish();
+            e.AddDamage(1);
 
             Vanish();
         }
