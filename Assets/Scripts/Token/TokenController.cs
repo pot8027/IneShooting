@@ -9,6 +9,17 @@ using UnityEngine.UI;
 public class TokenController : TokenProperty
 {
     /// <summary>
+    /// コルーチン制御用IDを変更する
+    /// </summary>
+    /// <param name="id">Identifier.</param>
+    protected void SetCoroutinueID(int id)
+    {
+        StopCoroutine("IEUpdate" + CurrentCoroutineID);
+        CurrentCoroutineID = id;
+        StartCoroutine("IEUpdate" + CurrentCoroutineID);
+    }
+
+    /// <summary>
     /// スコアテキスト
     /// </summary>
     public static Score _scoreText = null;

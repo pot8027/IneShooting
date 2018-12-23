@@ -8,6 +8,16 @@ using UnityEngine;
 public class TokenProperty : MonoBehaviour
 {
     /// <summary>
+    /// 次回コルーチンID
+    /// </summary>
+    private int _currentCoroutinueID = 0;
+    public int CurrentCoroutineID
+    {
+        get { return _currentCoroutinueID; }
+        set { _currentCoroutinueID = value; }
+    }
+
+    /// <summary>
     /// 横幅
     /// </summary>
     private float _width = 0.0f;
@@ -30,7 +40,7 @@ public class TokenProperty : MonoBehaviour
     /// <summary>
     /// 移動速度
     /// </summary>
-    private float _moveSpeed = 5.0f;
+    private float _moveSpeed = 10.0f;
     public float MoveSpeed
     {
         get { return _moveSpeed; }

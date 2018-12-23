@@ -10,22 +10,6 @@ public class Enemy : TokenController
     private static Player _target = null;
 
     /// <summary>
-    /// 次回コルーチンID
-    /// </summary>
-    protected int _currentCoroutinueID = 0;
-
-    /// <summary>
-    /// コルーチン制御用IDを変更する
-    /// </summary>
-    /// <param name="id">Identifier.</param>
-    protected void SetCoroutinueID(int id)
-    {
-        StopCoroutine("IEUpdate" + _currentCoroutinueID);
-        _currentCoroutinueID = id;
-        StartCoroutine("IEUpdate" + _currentCoroutinueID);
-    }
-
-    /// <summary>
     /// ヒットポイント
     /// </summary>
     private int _hp = 1;

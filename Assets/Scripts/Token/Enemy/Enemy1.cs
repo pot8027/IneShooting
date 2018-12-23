@@ -10,7 +10,7 @@ public class Enemy1 : Enemy
     /// <returns>The hp.</returns>
     protected override int GetMaxHP()
     {
-        return 4;
+        return 2;
     }
 
     /// <summary>
