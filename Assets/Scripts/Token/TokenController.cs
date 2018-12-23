@@ -1,12 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// トークン共通操作関連
 /// </summary>
 public class TokenController : TokenProperty
 {
+    /// <summary>
+    /// スコアテキスト
+    /// </summary>
+    public static Score _scoreText = null;
+
+    public static void AddScore(float score)
+    {
+        if (_scoreText == null)
+        {
+            _scoreText = GameObject.Find("Score").GetComponent<Score>();
+        }
+
+        _scoreText.AddScore(score);
+    }
+
     /// <summary>
     /// X座標
     /// </summary>

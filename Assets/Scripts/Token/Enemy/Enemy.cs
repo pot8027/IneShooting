@@ -59,9 +59,9 @@ public class Enemy : TokenController
     /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
     /// </summary>
     /// <returns>The score.</returns>
-    protected virtual int GetScore()
+    protected virtual float GetScore()
     {
-        return 0;
+        return 10;
     }
 
     /// <summary>
@@ -82,8 +82,10 @@ public class Enemy : TokenController
         // ヒットポイントがなくなっていれば消えて終了。
         if (HP <= 0)
         {
-            // TODO:スコア追加
             // TODO:消滅時パーティクルなど
+
+            // スコア追加
+            AddScore(GetScore());
 
             Destroy(gameObject);
             return;
