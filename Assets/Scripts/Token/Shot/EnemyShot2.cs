@@ -86,6 +86,7 @@ public class EnemyShot2 : EnemyShot
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate1()
     {
+        // 一度に曲がれる角度。大きいとくいっと曲がる
         const float ROT = 5.0f;
 
         while (true)

@@ -70,6 +70,7 @@ public class Enemy : TokenController
     protected void Start()
     {
         HP = GetMaxHP();
+        InitSize();
         SetCoroutinueID(1);
     }
 

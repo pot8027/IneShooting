@@ -38,6 +38,16 @@ public class TokenController : TokenProperty
     }
 
     /// <summary>
+    /// サイズの初期設定
+    /// </summary>
+    public void InitSize()
+    {
+        var w = SpriteWidth / 2;
+        var h = SpriteHeight / 2;
+        SetSize(w, h);
+    }
+
+    /// <summary>
     /// 矩形コリジョンの幅.
     /// </summary>
     /// <value>The width of the box collider.</value>

@@ -34,8 +34,6 @@ public class Enemy1 : Enemy
             return;
         }
 
-        //Angle = Direction;
-
         base.Update();
     }
 
@@ -45,7 +43,7 @@ public class Enemy1 : Enemy
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate1()
     {
-        SetVelocity(180, 1);
+        SetVelocity(180, 3);
 
         while (true)
         {

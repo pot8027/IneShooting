@@ -43,9 +43,9 @@ public class Player : TokenController
     // Start is called before the first frame update
     private void Start()
     {
-        var w = SpriteWidth / 2;
-        var h = SpriteHeight / 2;
-        SetSize(w, h);
+        InitSize();
+
+        StartCoroutine("IEPlayerShot");
     }
 
     // Update is called once per frame
@@ -55,10 +55,19 @@ public class Player : TokenController
         Vector2 v = AppUtil.GetInputVector();
         float speed = MoveSpeed * Time.deltaTime;
         ClampScreenAndMove(v * speed);
+    }
 
-        if (Input.GetKey(KeyCode.JoystickButton1))
+    IEnumerator IEPlayerShot()
+    {
+        while(true)
         {
-            PlayerShot.Add(X, Y, 0.0f, 10.0f);
+            yield return new WaitForSeconds(0.07f);
+
+            // キー入力で弾
+            if (Input.GetKey(KeyCode.JoystickButton1))
+            {
+                PlayerShot.Add(X, Y, 0.0f, 10.0f);
+            }
         }
     }
 
