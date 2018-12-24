@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public static Mode CurrentMode
     {
         get { return _mode; }
+        set { _mode = value; }
     }
 
     /// <summary>
@@ -74,6 +75,9 @@ public class GameManager : MonoBehaviour
         // テキストを保持
         _textPause = GameObject.Find("LPAUSE");
         _textPause.SetActive(false);
+
+        // ゲーム状態初期化
+        CurrentMode = Mode.normal;
     }
 
     /// <summary>
@@ -81,27 +85,31 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        // スタートキー押下
-        if (Input.GetKeyUp(KeyCode.JoystickButton8))
-        {
-            switch (CurrentMode)
-            {
-                case Mode.normal:
 
+        switch (CurrentMode)
+        {
+            case Mode.normal:
+
+                // スタートキー押下
+                if (Input.GetKeyUp(KeyCode.JoystickButton8))
+                {
                     // ポーズ
                     SwitchPouse();
-                    break;
+                }
+                break;
 
-                case Mode.gameover:
-                    break;
+            case Mode.gameclear:
+                Application.LoadLevel("GameClear");
+                return;
 
-                case Mode.gameclear:
-                    break;
+            case Mode.gameover:
+                Application.LoadLevel("GameOver");
+                return;
 
-                default:
-                    break;
-            }
+            default:
+                break;
         }
+
 
         if (IsPause)
         {

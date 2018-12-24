@@ -11,7 +11,7 @@ public class Fuku : Enemy
     /// <returns>The hp.</returns>
     protected override int GetMaxHP()
     {
-        return 9999;
+        return 99;
     }
 
     /// <summary>
@@ -29,8 +29,19 @@ public class Fuku : Enemy
             VY *= -1;
         }
 
-        // HP0時の制御
-        base.UpdateEach();
+        // ヒットポイントがなくなっていれば消えて終了。
+        if (HP <= 0)
+        {
+            // TODO:消滅時パーティクルなど
+
+            // スコア追加
+            AddScore(GetScore());
+            Destroy(gameObject);
+
+            // ゲームクリア
+            GameManager.CurrentMode = GameManager.Mode.gameclear;
+            return;
+        }
     }
 
     /// <summary>

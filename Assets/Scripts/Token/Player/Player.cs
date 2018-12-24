@@ -40,6 +40,15 @@ public class Player : TokenController
         return _parent.Add(x, y, direction, speed);
     }
 
+    /// <summary>
+    /// プレイヤーを破棄
+    /// </summary>
+    public void DestroyPlayer()
+    {
+        DestroyObj();
+        GameManager.CurrentMode = GameManager.Mode.gameover;
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
