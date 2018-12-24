@@ -77,7 +77,8 @@ public class Player : TokenController
             // キー入力で弾
             if (Input.GetKey(KeyCode.JoystickButton1))
             {
-                PlayerShot.Add(X, Y, 0.0f, 15.0f);
+                PlayerShot.Add(X, Y + 0.5f, 0.0f, 15.0f);
+                PlayerShot.Add(X, Y - 0.5f, 0.0f, 15.0f);
             }
         }
     }
