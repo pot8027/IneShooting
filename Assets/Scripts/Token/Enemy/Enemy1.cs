@@ -80,7 +80,7 @@ public class Enemy1 : Enemy
                 break;
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }

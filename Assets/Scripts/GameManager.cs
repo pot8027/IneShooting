@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// フレームカウント
+    /// </summary>
     private long _frameCount = 0;
 
+    /// <summary>
+    /// ステージデータ
+    /// </summary>
     private StageDataReader _stageDataR = new StageDataReader();
+
+    /// <summary>
+    /// ステージ定義
+    /// </summary>
     private StageDefineReader _stageDefineR = new StageDefineReader();
 
     /// <summary>
