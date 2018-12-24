@@ -34,17 +34,8 @@ public class Enemy1 : Enemy
             return;
         }
 
-        // ヒットポイントがなくなっていれば消えて終了。
-        if (HP <= 0)
-        {
-            // TODO:消滅時パーティクルなど
-
-            // スコア追加
-            AddScore(GetScore());
-
-            Destroy(gameObject);
-            return;
-        }
+        // HP0時の制御
+        base.UpdateEach();
     }
 
     /// <summary>

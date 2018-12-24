@@ -22,12 +22,26 @@ public class StageDefineReader
 
         try
         {
-            string path = Application.dataPath + "/Resources/Text/" + textName;
+            string path = Application.dataPath + "/Resources/Stage/" + textName;
             sr = new StreamReader(path, Encoding.GetEncoding("UTF-8"));
             while (!sr.EndOfStream)
             {
                 var line = sr.ReadLine();
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+
+                if (IsComment(line))
+                {
+                    continue;
+                }
+
                 var values = line.Split(',');
+                if (values.Length < 2)
+                {
+                    continue;
+                }
 
                 // ID,、プレハブ名、X座標、Y座標
                 string id = values[0].Trim();
@@ -59,5 +73,16 @@ public class StageDefineReader
     public StageDefine GetStageDataByID(string id)
     {
         return _stageDefineDictionary[id];
+    }
+
+    private bool IsComment(string line)
+    {
+        string head = line.Substring(0, 1);
+        if ("#".Equals(head))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

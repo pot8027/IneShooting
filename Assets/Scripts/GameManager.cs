@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // ステージデータ読み込み
-        _stageDataR.Load("Stage1.txt");
-        _stageDefineR.Load("Define.txt");
+        _stageDataR.Load("Stage1.csv");
+        _stageDefineR.Load("StageDefine.csv");
 
         // 各インスタンス生成
         PlayerShot.InitTokenManager(32);
