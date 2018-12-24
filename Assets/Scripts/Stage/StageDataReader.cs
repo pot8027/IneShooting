@@ -23,6 +23,7 @@ public class StageDataReader
         try
         {
             string path = Application.dataPath + "/Resources/Stage/" + textName;
+            LogUtil.WriteLog(path);
             sr = new StreamReader(path, Encoding.GetEncoding("UTF-8"));
             while (!sr.EndOfStream)
             {
@@ -56,6 +57,7 @@ public class StageDataReader
         catch(Exception e)
         {
             Debug.Log(e.ToString());
+            LogUtil.WriteLog(e.ToString());
         }
         finally
         {
