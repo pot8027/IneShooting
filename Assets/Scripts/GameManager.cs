@@ -5,6 +5,23 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     /// <summary>
+    /// ゲーム状態
+    /// </summary>
+    public enum Mode
+    {
+        title,      // タイトル
+        normal,     // ゲーム中
+        gameover,   // ゲームオーバー
+        gameclear   // ゲームクリア
+    }
+
+    private static Mode _mode = Mode.normal;
+    public static Mode CurrentMode
+    {
+        get { return _mode; }
+    }
+
+    /// <summary>
     /// フレームカウント
     /// </summary>
     private long _frameCount = 0;
@@ -23,6 +40,11 @@ public class GameManager : MonoBehaviour
     /// プレハブリスト
     /// </summary>
     private Dictionary<string, GameObject> _prefabDictionary = new Dictionary<string, GameObject>();
+
+    /// <summary>
+    /// テキスト：PAUSE
+    /// </summary>
+    private GameObject _textPause = null;
 
     /// <summary>
     /// ポーズ中フラグ
@@ -48,6 +70,10 @@ public class GameManager : MonoBehaviour
         EnemyShot1.InitTokenManager(256);
         EnemyShot2.InitTokenManager(256);
         Particle.InitTokenManager(512);
+
+        // テキストを保持
+        _textPause = GameObject.Find("LPAUSE");
+        _textPause.SetActive(false);
     }
 
     /// <summary>
@@ -58,7 +84,23 @@ public class GameManager : MonoBehaviour
         // スタートキー押下
         if (Input.GetKeyUp(KeyCode.JoystickButton8))
         {
-            SwitchPouse();
+            switch (CurrentMode)
+            {
+                case Mode.normal:
+
+                    // ポーズ
+                    SwitchPouse();
+                    break;
+
+                case Mode.gameover:
+                    break;
+
+                case Mode.gameclear:
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         if (IsPause)
@@ -66,6 +108,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // フレーム更新
+        UpdateFrame();
+    }
+
+    /// <summary>
+    /// フレーム情報を更新
+    /// </summary>
+    private void UpdateFrame()
+    {
         if (_frameCount >= 999999999999)
         {
             return;
@@ -145,11 +196,13 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 0;
             _pause = true;
+            _textPause.SetActive(true);
         }
         else
         {
             Time.timeScale = 1.0f;
             _pause = false;
+            _textPause.SetActive(false);
         }
     }
 }

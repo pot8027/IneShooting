@@ -44,7 +44,6 @@ public class TokenController : TokenProperty
     /// スコアテキスト
     /// </summary>
     public static Score _scoreText = null;
-
     public static void AddScore(float score)
     {
         if (_scoreText == null)
