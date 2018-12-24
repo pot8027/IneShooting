@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
 
         // 各インスタンス生成
         PlayerShot.InitTokenManager(32);
-        EnemyShot1.InitTokenManager(64);
-        EnemyShot2.InitTokenManager(64);
+        EnemyShot1.InitTokenManager(256);
+        EnemyShot2.InitTokenManager(256);
         Particle.InitTokenManager(512);
     }
 
@@ -45,6 +45,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // スタートキー押下
+        if (Input.GetKeyUp(KeyCode.JoystickButton8))
+        {
+            SwitchPouse();
+        }
+
+        if (IsPause)
+        {
+            return;
+        }
+
         if (_frameCount >= 999999999999)
         {
             return;
@@ -84,7 +95,7 @@ public class GameManager : MonoBehaviour
 
             float x = stageDefine.PointX;
             float y = stageDefine.PointY;
-            Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
+            GameObject g = Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
         }
     }
 
@@ -113,5 +124,22 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("[" + prefubName + "] " + "が存在しない");
         return null;
+    }
+
+    /// <summary>
+    /// ポーズ状態を切り替える
+    /// </summary>
+    private void SwitchPouse()
+    {
+        if (Time.timeScale > 0)
+        {
+            Time.timeScale = 0;
+            _pause = true;
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+            _pause = false;
+        }
     }
 }

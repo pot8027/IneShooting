@@ -59,9 +59,9 @@ public class Enemy : TokenController
     }
 
     /// <summary>
-    /// Update this instance.
+    /// 個別処理用更新処理
     /// </summary>
-    protected void Update()
+    protected override void UpdateEach()
     {
         // ヒットポイントがなくなっていれば消えて終了。
         if (HP <= 0)

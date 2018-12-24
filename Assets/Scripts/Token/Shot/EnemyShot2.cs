@@ -53,9 +53,9 @@ public class EnemyShot2 : EnemyShot
     }
 
     /// <summary>
-    /// Update this instance.
+    /// 個別処理用更新処理
     /// </summary>
-    private void Update()
+    protected override void UpdateEach()
     {
         if (IsOutside())
         {

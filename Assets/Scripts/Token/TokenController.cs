@@ -9,6 +9,27 @@ using UnityEngine.UI;
 public class TokenController : TokenProperty
 {
     /// <summary>
+    /// 更新処理
+    /// </summary>
+    protected void Update()
+    {
+        if (GameManager.IsPause)
+        {
+            return;
+        }
+
+        UpdateEach();
+    }
+
+    /// <summary>
+    /// 個別処理用更新処理
+    /// </summary>
+    protected virtual void UpdateEach()
+    {
+
+    }
+
+    /// <summary>
     /// コルーチン制御用IDを変更する
     /// </summary>
     /// <param name="id">Identifier.</param>

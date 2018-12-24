@@ -50,9 +50,9 @@ public class Particle : TokenController
     }
 
     /// <summary>
-    /// Update this instance.
+    /// 個別処理用更新処理
     /// </summary>
-    void Update()
+    protected override void UpdateEach()
     {
         // 徐々に小さく遅く
         MulVelocity(0.95f);

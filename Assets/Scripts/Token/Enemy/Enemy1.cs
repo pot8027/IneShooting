@@ -14,9 +14,9 @@ public class Enemy1 : Enemy
     }
 
     /// <summary>
-    /// Update this instance.
+    /// 個別処理用更新処理
     /// </summary>
-    protected new void Update()
+    protected override void UpdateEach()
     {
         Vector2 min = GetWorldMin();
         Vector2 max = GetWorldMax();
@@ -34,7 +34,17 @@ public class Enemy1 : Enemy
             return;
         }
 
-        base.Update();
+        // ヒットポイントがなくなっていれば消えて終了。
+        if (HP <= 0)
+        {
+            // TODO:消滅時パーティクルなど
+
+            // スコア追加
+            AddScore(GetScore());
+
+            Destroy(gameObject);
+            return;
+        }
     }
 
     /// <summary>

@@ -48,8 +48,10 @@ public class Player : TokenController
         StartCoroutine("IEPlayerShot");
     }
 
-    // Update is called once per frame
-    private void Update()
+    /// <summary>
+    /// 個別処理用更新処理
+    /// </summary>
+    protected override void UpdateEach()
     {
         // キー入力で移動
         Vector2 v = AppUtil.GetInputVector();

@@ -42,9 +42,9 @@ public class TokenManager<T> where T : TokenController
             for (int i = 0; i < size; i++)
             {
                 GameObject g = Object.Instantiate(_prefab, new Vector3(), Quaternion.identity) as GameObject;
-                T obj = g.GetComponent<T>();
 
                 // この段階ではプールしておくだけ
+                T obj = g.GetComponent<T>();
                 obj.VanishCannotOverride();
                 _pool.Add(obj);
             }
