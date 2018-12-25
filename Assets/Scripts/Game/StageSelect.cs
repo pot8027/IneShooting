@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameClear : MonoBehaviour
+public class StageSelect : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class GameClear : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.JoystickButton8))
         {
             // ゲームに戻る
-            SceneManager.LoadScene("StageSelect");
+            SceneManager.LoadScene("Stage");
         }
     }
 }

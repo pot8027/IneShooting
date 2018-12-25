@@ -21,7 +21,7 @@ public class GameOver : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.JoystickButton8))
         {
             // ゲームに戻る
-            SceneManager.LoadScene("Stage");
+            SceneManager.LoadScene("StageSelect");
         }
     }
 }
