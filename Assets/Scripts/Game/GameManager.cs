@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -99,11 +100,11 @@ public class GameManager : MonoBehaviour
                 break;
 
             case Mode.gameclear:
-                Application.LoadLevel("GameClear");
+                SceneManager.LoadScene("GameClear");
                 return;
 
             case Mode.gameover:
-                Application.LoadLevel("GameOver");
+                SceneManager.LoadScene("GameOver");
                 return;
 
             default:

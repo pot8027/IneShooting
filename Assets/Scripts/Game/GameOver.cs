@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class GameOver : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.JoystickButton8))
         {
             // ゲームに戻る
-            Application.LoadLevel("Stage");
+            SceneManager.LoadScene("Stage");
         }
     }
 }
