@@ -16,7 +16,9 @@ public class LogUtil
         try
         {
             sr = new StreamWriter(path, false, System.Text.Encoding.UTF8);
-            sr.WriteLine(text);
+
+            string dt = DateTime.Now.ToString("[yyyy/MM/dd HH:mm:ss");
+            sr.WriteLine(dt + "¥t" + text);
         }
         finally
         {

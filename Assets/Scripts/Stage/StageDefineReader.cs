@@ -18,16 +18,11 @@ public class StageDefineReader
     /// <param name="textName">Text name.</param>
     public void Load(string textName)
     {
-        StreamReader sr = null;
-
         try
         {
-            string path = Application.dataPath + "/Resources/Stage/" + textName;
-            LogUtil.WriteLog(path);
-            sr = new StreamReader(path, Encoding.GetEncoding("UTF-8"));
-            while (!sr.EndOfStream)
+            List<string> readDataList = FileUtil.LoadCSVToList("Stage/" + textName);
+            foreach (string line in readDataList)
             {
-                var line = sr.ReadLine();
                 if (string.IsNullOrEmpty(line))
                 {
                     continue;
@@ -57,13 +52,6 @@ public class StageDefineReader
         {
             Debug.Log(e.ToString());
             LogUtil.WriteLog(e.ToString());
-        }
-        finally
-        {
-            if (sr != null)
-            {
-                sr.Close();
-            }
         }
     }
 
