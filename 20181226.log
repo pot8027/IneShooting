@@ -1,0 +1,2 @@
+﻿[2018/12/26 23:55:34¥tSystem.NullReferenceException: Object reference not set to an instance of an object
+  at FileUtil.LoadCSVToList (System.String path) [0x0001c] in /Volumes/E-Drive/Unity/IneShooting/Assets/Scripts/Utils/FileUtil.cs:25 

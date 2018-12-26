@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // TODO:ゲーム共通変数管理クラスに移行する
+    private static int _stageNo = 1;
+    public static int StageNo
+    {
+        set { _stageNo = value; }
+    }
+
     /// <summary>
     /// ゲーム状態
     /// </summary>
@@ -64,7 +71,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // ステージデータ読み込み
-        _stageDataR.Load("Stage1");
+        _stageDataR.Load("Stage" + _stageNo);
         _stageDefineR.Load("StageDefine");
 
         // 各インスタンス生成
@@ -92,7 +99,7 @@ public class GameManager : MonoBehaviour
             case Mode.normal:
 
                 // スタートキー押下
-                if (Input.GetKeyUp(KeyCode.JoystickButton8))
+                if (Input.GetKeyDown(KeyCode.JoystickButton8))
                 {
                     // ポーズ
                     SwitchPouse();

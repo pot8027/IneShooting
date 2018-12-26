@@ -18,7 +18,7 @@ public class GameClear : MonoBehaviour
     void Update()
     {
         // スタートキー押下
-        if (Input.GetKeyUp(KeyCode.JoystickButton8))
+        if (Input.GetKeyDown(KeyCode.JoystickButton8))
         {
             // ゲームに戻る
             SceneManager.LoadScene("StageSelect");
