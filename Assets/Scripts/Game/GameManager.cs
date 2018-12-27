@@ -93,13 +93,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-
         switch (CurrentMode)
         {
             case Mode.normal:
 
                 // スタートキー押下
-                if (Input.GetKeyDown(KeyCode.JoystickButton8))
+                if (InputManager.IsKeyDownPause())
                 {
                     // ポーズ
                     SwitchPouse();

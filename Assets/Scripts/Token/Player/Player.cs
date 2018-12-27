@@ -75,7 +75,7 @@ public class Player : TokenController
             yield return new WaitForSeconds(0.07f);
 
             // キー入力で弾
-            if (Input.GetKey(KeyCode.JoystickButton1))
+            if (InputManager.IsInputCircle())
             {
                 PlayerShot.Add(X + 0.4f, Y + 0.2f, 0.0f, 15.0f);
                 PlayerShot.Add(X + 0.4f, Y - 0.2f, 0.0f, 15.0f);
