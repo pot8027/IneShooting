@@ -10,6 +10,11 @@ public class StageSelect : MonoBehaviour
     /// </summary>
     public GameObject _currenntDifficult = null;
 
+    private void Start()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     // Update is called once per frame
     /// <summary>
     /// Update this instance.
