@@ -50,6 +50,48 @@ public class InputManager
     }
 
     /// <summary>
+    /// ボムキー押下中判定
+    /// </summary>
+    /// <returns><c>true</c>, if key circle was gotten, <c>false</c> otherwise.</returns>
+    public static bool IsInputTriangle()
+    {
+        // JOYPAD
+        if (Input.GetKey(KeyCode.JoystickButton2))
+        {
+            return true;
+        }
+
+        // キーボード
+        if (Input.GetKey(KeyCode.X))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// ボムキー押下判定
+    /// </summary>
+    /// <returns><c>true</c>, if key circle down was gotten, <c>false</c> otherwise.</returns>
+    public static bool IsKeyDownTriangle()
+    {
+        // JOYPAD
+        if (Input.GetKeyDown(KeyCode.JoystickButton2))
+        {
+            return true;
+        }
+
+        // キーボード
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// ポーズキー押下中判定
     /// </summary>
     /// <returns><c>true</c>, if key pause was gotten, <c>false</c> otherwise.</returns>

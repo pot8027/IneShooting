@@ -5,6 +5,11 @@ using UnityEngine;
 public class Player : TokenController
 {
     /// <summary>
+    /// 残りボム数
+    /// </summary>
+    private int _bombCount = 3;
+
+    /// <summary>
     /// プレハブ名
     /// </summary>
     private static readonly string PREFUB_NAME = "Player";
@@ -62,10 +67,43 @@ public class Player : TokenController
     /// </summary>
     protected override void UpdateEach()
     {
+        // ボム残り
+        SetLeftBomb(_bombCount);
+
         // キー入力で移動
         Vector2 v = AppUtil.GetInputVector();
         float speed = MoveSpeed * Time.deltaTime;
         ClampScreenAndMove(v * speed);
+
+        // ボム
+        if (InputManager.IsKeyDownTriangle())
+        {
+            Bomb();
+        }
+    }
+
+
+    private LeftBomb _leftBombText = null;
+    private void SetLeftBomb(int left)
+    {
+        if (_leftBombText == null)
+        {
+            _leftBombText = GameObject.Find("LeftBomb").GetComponent<LeftBomb>();
+        }
+        _leftBombText.SetLeft(left);
+    }
+
+    /// <summary>
+    /// ボム発射
+    /// </summary>
+    private void Bomb()
+    {
+        if (_bombCount >= 1)
+        {
+            _bombCount--;
+            EnemyShot1.VanishEachToken();
+            EnemyShot2.VanishEachToken();
+        }
     }
 
     IEnumerator IEPlayerShot()
@@ -82,26 +120,4 @@ public class Player : TokenController
             }
         }
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    string name = LayerMask.LayerToName(collision.gameObject.layer);
-
-    //    switch (name)
-    //    {
-    //        case "Enemy":
-    //        case "Bullet":
-    //            Vanish();
-
-    //            for (int i = 0; i < 16; i++)
-    //            {
-    //                Particle.Add(X, Y);
-    //            }
-
-    //            Sound.PlaySe("destroy");
-    //            Sound.StopBgm();
-
-    //            break;
-    //    }
-    //}
 }

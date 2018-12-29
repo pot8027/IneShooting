@@ -41,6 +41,14 @@ public class EnemyShot1 : EnemyShot
     }
 
     /// <summary>
+    /// 各トークンを破棄
+    /// </summary>
+    public static void VanishEachToken()
+    {
+        _parent.FuncForEachExist(n => n.Vanish());
+    }
+
+    /// <summary>
     /// 個別処理用更新処理
     /// </summary>
     protected override void UpdateEach()
