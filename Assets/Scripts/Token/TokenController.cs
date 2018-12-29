@@ -33,8 +33,18 @@ public class TokenController : TokenProperty
     /// コルーチン制御用IDを変更する
     /// </summary>
     /// <param name="id">Identifier.</param>
-    protected void SetCoroutinueID(int id)
+    /// <param name="forceUpdate">true=IDが同じでも再設定する</param>
+    protected void SetCoroutinueID(int id, bool forceUpdate = false)
     {
+        // 現在のコルーチンと同じなら何もしない
+        if (CurrentCoroutineID == id)
+        {
+            if (forceUpdate == false)
+            {
+                return;
+            }
+        }
+
         StopCoroutine("IEUpdate" + CurrentCoroutineID);
         CurrentCoroutineID = id;
         StartCoroutine("IEUpdate" + CurrentCoroutineID);

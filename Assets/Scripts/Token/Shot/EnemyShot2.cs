@@ -40,7 +40,7 @@ public class EnemyShot2 : EnemyShot
 
         // コルーチンが設定されない場合があるので
         EnemyShot2 e = _parent.Add(x, y, direction, speed);
-        e.SetCoroutinueID(1);
+        e.SetCoroutinueID(1, true); // 強制的に1で再設定するためtrueを渡す
         return e;
     }
 
@@ -61,6 +61,12 @@ public class EnemyShot2 : EnemyShot
         {
             Vanish();
         }
+    }
+
+    public override void Vanish()
+    {
+        Particle p = Particle.Add(X, Y, 0, 0);
+        base.Vanish();
     }
 
     /// <summary>

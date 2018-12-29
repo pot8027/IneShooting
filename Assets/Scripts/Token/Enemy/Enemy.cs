@@ -23,7 +23,7 @@ public class Enemy : TokenController
     /// ダメージを与える
     /// </summary>
     /// <param name="damage">Damage.</param>
-    public void AddDamage(int damage)
+    public virtual void AddDamage(int damage)
     {
         HP -= damage;
     }
