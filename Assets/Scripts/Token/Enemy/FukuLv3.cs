@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FukuLv3 : Enemy
 {
-    private int MAX_HP = 500;
+    private int MAX_HP = 1000;
 
     /// <summary>
     /// 敵キャラの最大HPを取得
