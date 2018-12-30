@@ -29,6 +29,9 @@ public class Fuku : Enemy
             VY *= -1;
         }
 
+        // HPバー更新
+        GameManager.HPBarMax.SetLeftHP(HP);
+
         // ヒットポイントがなくなっていれば消えて終了。
         if (HP <= 0)
         {
@@ -50,6 +53,10 @@ public class Fuku : Enemy
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate1()
     {
+        // HPバー表示
+        GameManager.HPBarMax.Show();
+        GameManager.HPBarMax.SetMaxHP((float)GetMaxHP());
+
         SetVelocity(180, 3);
 
         while (true)

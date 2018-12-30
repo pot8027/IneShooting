@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FukuLv3 : Enemy
+public class FukuLv2 : Enemy
 {
     private int MAX_HP = 1000;
 
@@ -31,6 +31,9 @@ public class FukuLv3 : Enemy
             VY *= -1;
         }
 
+        // HPバー更新
+        GameManager.HPBarMax.SetLeftHP(HP);
+
         // ヒットポイントがなくなっていれば消えて終了。
         if (HP <= 0)
         {
@@ -52,6 +55,10 @@ public class FukuLv3 : Enemy
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate1()
     {
+        // HPバー表示
+        GameManager.HPBarMax.Show();
+        GameManager.HPBarMax.SetMaxHP((float)MAX_HP);
+
         SetVelocity(180, 3);
 
         while (true)

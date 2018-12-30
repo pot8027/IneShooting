@@ -51,6 +51,15 @@ public class GameManager : MonoBehaviour
     private GameObject _textPause = null;
 
     /// <summary>
+    /// The hp bar max.
+    /// </summary>
+    private static HPBarMax _hpBarMax = null;
+    public static HPBarMax HPBarMax
+    {
+        get { return _hpBarMax; }
+    }
+
+    /// <summary>
     /// ポーズ中フラグ
     /// </summary>
     private static bool _pause = false;
@@ -67,6 +76,10 @@ public class GameManager : MonoBehaviour
     {
         // ステージデータ読み込み
         _stageDataR.Load("Stage" + _stageNo);
+
+        // ボスHP非表示
+        _hpBarMax = GameObject.Find("HPBarMax").GetComponent<HPBarMax>();
+        _hpBarMax.Hide();
 
         // 各インスタンス生成
         PlayerShot.InitTokenManager(32);
