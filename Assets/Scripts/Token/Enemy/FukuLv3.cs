@@ -158,4 +158,17 @@ public class FukuLv3 : Enemy
         double hpRate = (double)HP / (double)MAX_HP;
         return hpRate <= targetRate;
     }
+
+    //private void OnGUI()
+    //{
+    //    float labelX = (float)(Screen.width / 2) + XForPixelsPerUnit;
+    //    float labelY = (float)(Screen.height / 2) - YForPixelsPerUnit;
+
+    //    GUIUtil.SetFontSize(24);
+    //    GUIUtil.SetFontColor(Color.black);
+    //    GUIUtil.SetFontAlignment(TextAnchor.MiddleCenter);
+    //    GUIUtil.GUILabel(labelX, labelY, 300, 50, HP.ToString());
+    //    GUIUtil.GUILabel(100, labelY, 300, 50, HP.ToString());
+    //    GUIUtil.GUILabel(300, labelY, 300, 50, HP.ToString());
+    //}
 }

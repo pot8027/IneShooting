@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageDefine
+public class StageData
 {
     /// <summary>
     /// プレハブ名

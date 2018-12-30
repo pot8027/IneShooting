@@ -10,7 +10,7 @@ public class StageDataReader
     /// <summary>
     /// ステージ情報辞書
     /// </summary>
-    private Dictionary<float, List<string>> _stageDataDictionary = new Dictionary<float, List<string>>();
+    private Dictionary<float, StageData> _stageDataDictionary = new Dictionary<float, StageData>();
 
     /// <summary>
     /// ステージ定義を読み込む
@@ -41,12 +41,11 @@ public class StageDataReader
 
                 // ID、プレハブ名、X座標、Y座標
                 float frame = float.Parse(values[0].Trim());
-                List<string> prefubList = new List<string>();
-                for (int i = 1; i < values.Length; i++)
-                {
-                    prefubList.Add(values[i].Trim());
-                }
-                _stageDataDictionary.Add(frame, prefubList);
+                StageData stageData = new StageData();
+                stageData.PrefubName = values[1];
+                stageData.PointX = float.Parse(values[2]);
+                stageData.PointY = float.Parse(values[3]);
+                _stageDataDictionary.Add(frame, stageData);
             }
         }
         catch(Exception e)
@@ -61,9 +60,9 @@ public class StageDataReader
     /// </summary>
     /// <returns>The stage data by identifier.</returns>
     /// <param name="frame">Frame.</param>
-    public List<string> GetStageDataListByFrame(float frame)
+    public StageData GetStageDataListByFrame(float frame)
     {
-        List<string> result = null;
+        StageData result = null;
         if (_stageDataDictionary.TryGetValue(frame, out result))
         {
             return result;

@@ -41,11 +41,6 @@ public class GameManager : MonoBehaviour
     private StageDataReader _stageDataR = new StageDataReader();
 
     /// <summary>
-    /// ステージ定義
-    /// </summary>
-    private StageDefineReader _stageDefineR = new StageDefineReader();
-
-    /// <summary>
     /// プレハブリスト
     /// </summary>
     private Dictionary<string, GameObject> _prefabDictionary = new Dictionary<string, GameObject>();
@@ -72,7 +67,6 @@ public class GameManager : MonoBehaviour
     {
         // ステージデータ読み込み
         _stageDataR.Load("Stage" + _stageNo);
-        _stageDefineR.Load("StageDefine");
 
         // 各インスタンス生成
         PlayerShot.InitTokenManager(32);
@@ -149,30 +143,21 @@ public class GameManager : MonoBehaviour
     /// <param name="frame">Frame.</param>
     private void AddFrameData(float frame)
     {
-        List<string> stageDataList = _stageDataR.GetStageDataListByFrame(frame);
-        if (stageDataList == null)
+        StageData stageData = _stageDataR.GetStageDataListByFrame(frame);
+        if (stageData == null)
         {
             return;
         }
 
-        foreach (string id in stageDataList)
+        GameObject prefub = GetPrefubByName(stageData.PrefubName);
+        if (prefub == null)
         {
-            StageDefine stageDefine = _stageDefineR.GetStageDataByID(id);
-            if (stageDefine == null)
-            {
-                continue;
-            }
-
-            GameObject prefub = GetPrefubByName(stageDefine.PrefubName);
-            if (prefub == null)
-            {
-                continue;
-            }
-
-            float x = stageDefine.PointX;
-            float y = stageDefine.PointY;
-            GameObject g = Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
+            return;
         }
+
+        float x = stageData.PointX;
+        float y = stageData.PointY;
+        GameObject g = Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
     }
 
     /// <summary>

@@ -199,6 +199,33 @@ public class TokenController : TokenProperty
     }
 
     /// <summary>
+    /// Pixcelses the per unit.
+    /// </summary>
+    /// <returns>The per unit.</returns>
+    public float PixcelsPerUnit
+    {
+        get { return Renderer.sprite.pixelsPerUnit; }
+    }
+
+    /// <summary>
+    /// XFs the ot pixels per unit.
+    /// </summary>
+    /// <returns>The ot pixels per unit.</returns>
+    public float XForPixelsPerUnit
+    {
+        get { return X * PixcelsPerUnit; }
+    }
+
+    /// <summary>
+    /// XFs the ot pixels per unit.
+    /// </summary>
+    /// <returns>The ot pixels per unit.</returns>
+    public float YForPixelsPerUnit
+    {
+        get { return Y * PixcelsPerUnit; }
+    }
+
+    /// <summary>
     /// サイズを指定
     /// </summary>
     /// <param name="width">Width.</param>
