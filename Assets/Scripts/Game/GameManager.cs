@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 現フレームに対応するゲーム情報を取得して反映する
-        AddFrameData(_frameCount);
+        ExecuteFrameData(_frameCount);
 
         _frameCount++;
     }
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
     /// 指定フレームのゲーム情報を反映
     /// </summary>
     /// <param name="frame">Frame.</param>
-    private void AddFrameData(float frame)
+    private void ExecuteFrameData(float frame)
     {
         StageData stageData = _stageDataR.GetStageDataListByFrame(frame);
         if (stageData == null)
@@ -162,15 +162,25 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameObject prefub = GetPrefubByName(stageData.PrefubName);
-        if (prefub == null)
+        // プレハブ操作
+        if (StageData.TYPE_PREFUB.Equals(stageData.DataType))
         {
-            return;
+            GameObject prefub = GetPrefubByName(stageData.PrefubName);
+            if (prefub == null)
+            {
+                return;
+            }
+
+            float x = stageData.PointX;
+            float y = stageData.PointY;
+            GameObject g = Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
         }
 
-        float x = stageData.PointX;
-        float y = stageData.PointY;
-        GameObject g = Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
+        // フレーム操作
+        else if (StageData.TYPE_FRAME.Equals(stageData.DataType))
+        {
+            _frameCount = stageData.NextFrame;
+        }
     }
 
     /// <summary>
