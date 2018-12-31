@@ -71,6 +71,11 @@ public class EnemyShot1 : EnemyShot
     /// <param name="collision">Collision.</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (Exists == false)
+        {
+            return;
+        }
+
         string layerName = LayerMask.LayerToName(collision.gameObject.layer);
 
         // プレイヤ

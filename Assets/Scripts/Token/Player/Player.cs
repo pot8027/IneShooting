@@ -50,6 +50,13 @@ public class Player : TokenController
     /// </summary>
     public void DestroyPlayer()
     {
+        // ボムが残っていたらボムを使って終了
+        if (_bombCount >= 1)
+        {
+            Bomb();
+            return;
+        }
+
         DestroyObj();
         GameManager.CurrentMode = GameManager.Mode.gameover;
     }
