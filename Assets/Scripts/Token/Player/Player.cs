@@ -7,7 +7,7 @@ public class Player : TokenController
     /// <summary>
     /// 残りボム数
     /// </summary>
-    private int _bombCount = 3;
+    private int _bombCount = 5;
 
     /// <summary>
     /// プレハブ名

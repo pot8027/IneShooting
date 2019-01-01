@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FukuLv3 : Enemy
 {
-    private int MAX_HP = 2500;
+    private int MAX_HP = 1500;
 
     /// <summary>
     /// 敵キャラの最大HPを取得
@@ -80,7 +80,7 @@ public class FukuLv3 : Enemy
         int count = 0;
         while (true)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.22f);
             float dir = GetTargetAim();
             EnemyShot1.Add(X, Y, dir, 5.0f);
             EnemyShot1.Add(X, Y, dir, 4.0f);
@@ -137,7 +137,7 @@ public class FukuLv3 : Enemy
         int count = 0;
         while (true)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1.2f);
 
             // 画面上段に敵配置
             Object.Instantiate(g, new Vector3(7, 4, 0), Quaternion.identity);
@@ -146,7 +146,7 @@ public class FukuLv3 : Enemy
             Object.Instantiate(g, new Vector3(7, -4, 0), Quaternion.identity);
 
             count++;
-            if (count >= 150)
+            if (count >= 25)
             {
                 SetCoroutinueID(5);
                 break;
@@ -165,7 +165,7 @@ public class FukuLv3 : Enemy
         int count = 0;
         while (true)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.22f);
             float dir = GetTargetAim();
             EnemyShot1.Add(X, Y, dir, 6.0f);
             EnemyShot1.Add(X, Y, dir, 5.0f);
@@ -175,7 +175,7 @@ public class FukuLv3 : Enemy
             EnemyShot1.Add(X, Y - 0.1f, 180, 5.0f);
 
             count++;
-            if (count >= 50)
+            if (count >= 40)
             {
                 SetCoroutinueID(2);
                 break;
