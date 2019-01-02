@@ -84,10 +84,10 @@ public class Player : TokenController
         StartCoroutine("IEPlayerShot");
         StartCoroutine("IEAngleUpdate");
 
-        AddRyo();
-        AddRyo();
-        AddRyo();
-        AddRyo();
+        for (int i = 0; i < MAX_RYO; i++)
+        {
+            AddRyo();
+        }
     }
 
     /// <summary>

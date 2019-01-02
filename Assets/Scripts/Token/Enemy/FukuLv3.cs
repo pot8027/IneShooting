@@ -84,6 +84,8 @@ public class FukuLv3 : Enemy
             float dir = GetTargetAim();
             EnemyShot1.Add(X, Y, dir, 5.0f);
             EnemyShot1.Add(X, Y, dir, 4.0f);
+            EnemyShot1.Add(X, Y, dir, 4.0f);
+            EnemyShot1.Add(X, Y, dir, 3.0f);
 
             count++;
             if (count >= 50)
@@ -111,8 +113,8 @@ public class FukuLv3 : Enemy
             yield return new WaitForSeconds(0.1f);
             EnemyShot1.Add(X, Y, dir, 4);
             EnemyShot1.Add(X, Y, dir + 180, 4);
-            EnemyShot1.Add(X - 1.0f, Y, dir, 4);
-            EnemyShot1.Add(X - 1.0f, Y, dir + 180, 4);
+            EnemyShot1.Add(X - 0.5f, Y, dir, 4);
+            EnemyShot1.Add(X - 0.5f, Y, dir + 180, 4);
             dir += 8;
 
             count++;
@@ -146,7 +148,7 @@ public class FukuLv3 : Enemy
             Object.Instantiate(g, new Vector3(7, -4, 0), Quaternion.identity);
 
             count++;
-            if (count >= 25)
+            if (count >= 10)
             {
                 SetCoroutinueID(5);
                 break;
@@ -160,22 +162,33 @@ public class FukuLv3 : Enemy
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate5()
     {
-        SetVelocity(90, 12);
+        SetVelocity(90, 0);
+
+        bool anglePlus = true;
 
         int count = 0;
         while (true)
         {
-            yield return new WaitForSeconds(0.22f);
-            float dir = GetTargetAim();
-            EnemyShot1.Add(X, Y, dir, 6.0f);
-            EnemyShot1.Add(X, Y, dir, 5.0f);
-            EnemyShot1.Add(X, Y, dir, 4.0f);
-            EnemyShot1.Add(X, Y, dir, 3.0f);
-            EnemyShot1.Add(X, Y + 0.1f, 180, 5.0f);
-            EnemyShot1.Add(X, Y - 0.1f, 180, 5.0f);
+            for (int i = 1; i < 36; i++)
+            {
+                yield return new WaitForSeconds(0.05f);
+
+                if (anglePlus)
+                {
+                    EnemyShot1.Add(X, Y, 90 + i * 5, 3.0f);
+                    EnemyShot1.Add(X - 0.5f, Y, 270 - i * 5, 3.0f);
+                }
+                else
+                {
+                    EnemyShot1.Add(X, Y, 270 - i * 5, 3.0f);
+                    EnemyShot1.Add(X - 0.5f, Y, 90 + i * 5, 3.0f);
+                }
+            }
+
+            anglePlus = !anglePlus;
 
             count++;
-            if (count >= 40)
+            if (count >= 10)
             {
                 SetCoroutinueID(2);
                 break;
