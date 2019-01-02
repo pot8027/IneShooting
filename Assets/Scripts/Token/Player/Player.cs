@@ -7,7 +7,7 @@ public class Player : TokenController
     /// <summary>
     /// 残りボム数
     /// </summary>
-    private int _bombCount = 5;
+    private int _bombCount = 4;
 
     /// <summary>
     /// プレハブ名
@@ -45,6 +45,21 @@ public class Player : TokenController
         return _parent.Add(x, y, direction, speed);
     }
 
+    private static readonly int MAX_RYO = 4;
+    /// <summary>
+    /// 涼リスト
+    /// </summary>
+    private List<Ryo> _ryoList = new List<Ryo>();
+
+    /// <summary>
+    /// 回転体用の現在の基準角度
+    /// </summary>
+    private int _currentAngle = 0;
+    public int CurrentAngle
+    {
+        get { return _currentAngle; }
+    }
+
     /// <summary>
     /// プレイヤーを破棄
     /// </summary>
@@ -67,6 +82,12 @@ public class Player : TokenController
         InitSize();
 
         StartCoroutine("IEPlayerShot");
+        StartCoroutine("IEAngleUpdate");
+
+        AddRyo();
+        AddRyo();
+        AddRyo();
+        AddRyo();
     }
 
     /// <summary>
@@ -87,6 +108,12 @@ public class Player : TokenController
         {
             Bomb();
         }
+
+        //// 涼さん追加
+        //if (InputManager.IsKeyDownR())
+        //{
+        //    AddRyo();
+        //}
     }
 
 
@@ -113,6 +140,22 @@ public class Player : TokenController
         }
     }
 
+    private void AddRyo()
+    {
+        if (MAX_RYO <= _ryoList.Count)
+        {
+            return;
+        }
+
+        GameObject prefub = Resources.Load("Prefabs/" + "Ryo") as GameObject;
+        GameObject g = Object.Instantiate(prefub, new Vector3(X, Y, 0), Quaternion.identity);
+        Ryo ryo = g.GetComponent<Ryo>();
+        ryo.Parent = this;
+        int adjustAngle = 360 / MAX_RYO * _ryoList.Count;
+        ryo.AdjustAngle = adjustAngle;
+        _ryoList.Add(ryo);
+    }
+
     IEnumerator IEPlayerShot()
     {
         while(true)
@@ -124,6 +167,23 @@ public class Player : TokenController
             {
                 PlayerShot.Add(X + 0.4f, Y + 0.2f, 0.0f, 15.0f);
                 PlayerShot.Add(X + 0.4f, Y - 0.2f, 0.0f, 15.0f);
+            }
+        }
+    }
+
+    IEnumerator IEAngleUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            // 角度更新
+            _currentAngle++;
+            _currentAngle++;
+            _currentAngle++;
+            if (_currentAngle >= 360)
+            {
+                _currentAngle = 0;
             }
         }
     }

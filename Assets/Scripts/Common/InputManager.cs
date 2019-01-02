@@ -92,6 +92,21 @@ public class InputManager
     }
 
     /// <summary>
+    /// 涼さんキー押下判定
+    /// </summary>
+    /// <returns><c>true</c>, if key circle down was gotten, <c>false</c> otherwise.</returns>
+    public static bool IsKeyDownR()
+    {
+        // キーボード
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// ポーズキー押下中判定
     /// </summary>
     /// <returns><c>true</c>, if key pause was gotten, <c>false</c> otherwise.</returns>
