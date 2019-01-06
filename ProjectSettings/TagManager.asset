@@ -22,7 +22,7 @@ TagManager:
   - PlayerShot
   - EnemyShot
   - EnemyShotBreakable
-  - 
+  - Item
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2693566335
+    locked: 0
+  - name: Item
+    uniqueID: 621320739
     locked: 0
   - name: Player_Shot
     uniqueID: 336459083

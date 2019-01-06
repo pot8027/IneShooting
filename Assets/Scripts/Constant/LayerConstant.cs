@@ -15,6 +15,11 @@ public static class LayerConstant
     public static readonly string ENEMY = "Enemy";
 
     /// <summary>
+    /// レイヤー名：アイテム
+    /// </summary>
+    public static readonly string ITEM = "Item";
+
+    /// <summary>
     /// レイヤー名：プレイヤーショット
     /// </summary>
     public static readonly string PLAYER_SHOT = "PlayerShot";

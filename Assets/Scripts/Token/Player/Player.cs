@@ -45,7 +45,7 @@ public class Player : TokenController
         return _parent.Add(x, y, direction, speed);
     }
 
-    private static readonly int MAX_RYO = 4;
+    private static readonly int MAX_RYO = 6;
     /// <summary>
     /// 涼リスト
     /// </summary>
@@ -65,6 +65,9 @@ public class Player : TokenController
     /// </summary>
     public void DestroyPlayer()
     {
+        // 涼さんが入れば１基消滅
+        RemoveRyo();
+
         // ボムが残っていたらボムを使って終了
         if (_bombCount >= 1)
         {
@@ -84,10 +87,11 @@ public class Player : TokenController
         StartCoroutine("IEPlayerShot");
         StartCoroutine("IEAngleUpdate");
 
-        for (int i = 0; i < MAX_RYO; i++)
-        {
-            AddRyo();
-        }
+        // デバッグ用涼さん追加
+        //for (int i = 0; i < MAX_RYO; i++)
+        //{
+        //    AddRyo();
+        //}
     }
 
     /// <summary>
@@ -108,12 +112,6 @@ public class Player : TokenController
         {
             Bomb();
         }
-
-        //// 涼さん追加
-        //if (InputManager.IsKeyDownR())
-        //{
-        //    AddRyo();
-        //}
     }
 
 
@@ -140,6 +138,9 @@ public class Player : TokenController
         }
     }
 
+    /// <summary>
+    /// 涼さん追加
+    /// </summary>
     private void AddRyo()
     {
         if (MAX_RYO <= _ryoList.Count)
@@ -154,6 +155,63 @@ public class Player : TokenController
         int adjustAngle = 360 / MAX_RYO * _ryoList.Count;
         ryo.AdjustAngle = adjustAngle;
         _ryoList.Add(ryo);
+    }
+
+    /// <summary>
+    /// 涼さん１つ破棄
+    /// </summary>
+    private void RemoveRyo()
+    {
+        if (_ryoList.Count <= 0)
+        {
+            return;
+        }
+
+        Ryo ryo = _ryoList[_ryoList.Count - 1];
+        Destroy(ryo.gameObject);
+        _ryoList.Remove(ryo);
+    }
+
+    /// <summary>
+    /// 衝突時イベント
+    /// </summary>
+    /// <param name="collision">Collision.</param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Exists == false)
+        {
+            return;
+        }
+
+        string layerName = LayerMask.LayerToName(collision.gameObject.layer);
+
+        // アイテム
+        if (LayerConstant.ITEM.Equals(layerName))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            if (item.Exists == false)
+            {
+                return;
+            }
+
+            Item.ItemType itemType = item.GetItemType();
+
+            // 涼
+            if (Item.ItemType.RYO == itemType)
+            {
+                AddRyo();
+                item.Exists = false;
+                Destroy(collision.gameObject);
+            }
+
+            // 稲
+            else if (Item.ItemType.INE == itemType)
+            {
+                _bombCount++;
+                item.Exists = false;
+                Destroy(collision.gameObject);
+            }
+        }
     }
 
     IEnumerator IEPlayerShot()
