@@ -33,7 +33,11 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// フレームカウント
     /// </summary>
-    private long _frameCount = 0;
+    private static long _frameCount = 0;
+    public static long FrameCount
+    {
+        set { _frameCount = value; }
+    }
 
     /// <summary>
     /// ステージデータ
@@ -51,15 +55,6 @@ public class GameManager : MonoBehaviour
     private GameObject _textPause = null;
 
     /// <summary>
-    /// The hp bar max.
-    /// </summary>
-    private static HPBarMax _hpBarMax = null;
-    public static HPBarMax HPBarMax
-    {
-        get { return _hpBarMax; }
-    }
-
-    /// <summary>
     /// ポーズ中フラグ
     /// </summary>
     private static bool _pause = false;
@@ -74,12 +69,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // フレーム初期化
+        _frameCount = 0;
+
         // ステージデータ読み込み
         _stageDataR.Load("Stage" + _stageNo);
-
-        // ボスHP非表示
-        _hpBarMax = GameObject.Find("HPBarMax").GetComponent<HPBarMax>();
-        _hpBarMax.Hide();
 
         // 各インスタンス生成
         PlayerShot.InitTokenManager(32);
@@ -174,6 +168,8 @@ public class GameManager : MonoBehaviour
             float x = stageData.PointX;
             float y = stageData.PointY;
             GameObject g = Object.Instantiate(prefub, new Vector3(x, y, 0), Quaternion.identity);
+            TokenController tokenController = g.GetComponent<TokenController>();
+            tokenController.SetStageeData(stageData);
         }
 
         // フレーム操作

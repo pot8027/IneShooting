@@ -9,6 +9,28 @@ using UnityEngine.UI;
 public class TokenController : TokenProperty
 {
     /// <summary>
+    /// Sets the stagee data.
+    /// </summary>
+    /// <param name="data">Data.</param>
+    public void SetStageeData(StageData data)
+    {
+        HP = data.Hp;
+        MaxHP = data.Hp;
+        IsDispHpBar = data.IsDispHP;
+        Score = data.Score;
+        HasGameClearFlg = data.FlgGameClear;
+        FrameJump = data.JumpFrame;
+        GeneratePrefubName = data.GeneratePrefubName;
+
+        // HPバー表示
+        if (IsDispHpBar)
+        {
+            HPBarMax.Show();
+            HPBarMax.SetMaxHP(HP);
+        }
+    }
+
+    /// <summary>
     /// 更新処理
     /// </summary>
     protected void Update()
@@ -636,15 +658,6 @@ public class TokenController : TokenProperty
     {
         gameObject.SetActive(false);
         Exists = false;
-    }
-
-    /// <summary>
-    /// HPバーを表示するかどうか
-    /// </summary>
-    /// <returns><c>true</c>, if disp hp bar was ised, <c>false</c> otherwise.</returns>
-    protected virtual bool IsDispHpBar()
-    {
-        return false;
     }
 
     /// <summary>

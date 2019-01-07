@@ -92,4 +92,74 @@ public class TokenProperty : MonoBehaviour
     {
         get { return _boxCollider ?? (_boxCollider = GetComponent<BoxCollider2D>()); }
     }
+
+    /// <summary>
+    /// ヒットポイント
+    /// </summary>
+    private int _hp = 1;
+    protected int HP
+    {
+        set { _hp = value; }
+        get { return _hp; }
+    }
+
+    /// <summary>
+    /// MAXヒットポイント
+    /// </summary>
+    private int _maxHp = 1;
+    protected int MaxHP
+    {
+        set { _maxHp = value; }
+        get { return _maxHp; }
+    }
+
+    /// <summary>
+    /// HPバーを表示するかどうか
+    /// </summary>
+    private bool _flgDispHPBar = false;
+    protected bool IsDispHpBar
+    {
+        set { _flgDispHPBar = value; }
+        get { return _flgDispHPBar; }
+    }
+
+    /// <summary>
+    /// スコア
+    /// </summary>
+    private int _score = 1;
+    protected int Score
+    {
+        set { _score = value; }
+        get { return _score; }
+    }
+
+    /// <summary>
+    /// ゲームクリアフラグ
+    /// </summary>
+    private bool _flgGameClear = false;
+    protected bool HasGameClearFlg
+    {
+        set { _flgGameClear = value; }
+        get { return _flgGameClear; }
+    }
+
+    /// <summary>
+    /// 撃破時のジャンプ先フレーム
+    /// </summary>
+    private long _frameJump = -1;
+    protected long FrameJump
+    {
+        set { _frameJump = value; }
+        get { return _frameJump; }
+    }
+
+    /// <summary>
+    /// 撃破時の生成プレハブ名
+    /// </summary>
+    private string _generatePrefubName = string.Empty;
+    protected string GeneratePrefubName
+    {
+        set { _generatePrefubName = value; }
+        get { return _generatePrefubName; }
+    }
 }

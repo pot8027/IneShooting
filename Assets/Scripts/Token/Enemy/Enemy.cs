@@ -10,16 +10,6 @@ public class Enemy : TokenController
     private static Player _target = null;
 
     /// <summary>
-    /// ヒットポイント
-    /// </summary>
-    private int _hp = 1;
-    protected int HP
-    {
-        set { _hp = value; }
-        get { return _hp; }
-    }
-
-    /// <summary>
     /// ダメージを与える
     /// </summary>
     /// <param name="damage">Damage.</param>
@@ -29,31 +19,10 @@ public class Enemy : TokenController
     }
 
     /// <summary>
-    /// 敵キャラの最大HPを取得
-    /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
-    /// </summary>
-    /// <returns>The hp.</returns>
-    protected virtual int GetMaxHP()
-    {
-        return 50;
-    }
-
-    /// <summary>
-    /// 撃破時のスコアを取得
-    /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
-    /// </summary>
-    /// <returns>The score.</returns>
-    protected virtual float GetScore()
-    {
-        return 10;
-    }
-
-    /// <summary>
     /// Start this instance.
     /// </summary>
     protected void Start()
     {
-        HP = GetMaxHP();
         InitSize();
         SetCoroutinueID(1);
     }
@@ -63,16 +32,57 @@ public class Enemy : TokenController
     /// </summary>
     protected override void UpdateEach()
     {
+        Vector2 min = GetWorldMin();
+        Vector2 max = GetWorldMax();
+
+        // 上下ではみ出したら跳ね返る
+        if (Y < min.y || max.y < Y)
+        {
+            ClampScreen();
+            VY *= -1;
+        }
+        // 左ではみ出したら消滅して終了
+        if (X < min.x)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // ヒットポイントがなくなっていれば消えて終了。
         if (HP <= 0)
         {
-            // TODO:消滅時パーティクルなど
-
             // スコア追加
-            AddScore(GetScore());
+            AddScore(Score);
 
+            // 自身を破棄
             Destroy(gameObject);
+
+            // ゲームクリア判定
+            if (HasGameClearFlg)
+            {
+                GameManager.CurrentMode = GameManager.Mode.gameclear;
+            }
+
+            // 撃破時のフレームを指定
+            if (FrameJump >= 0)
+            {
+                GameManager.FrameCount = FrameJump;
+            }
+
+            // プレハブからインスタンス生成
+            if (!string.IsNullOrEmpty(GeneratePrefubName))
+            {
+                GameObject g = Resources.Load("Prefabs/" + GeneratePrefubName) as GameObject;
+                Object.Instantiate(g, new Vector3(X, Y, 0), Quaternion.identity);
+            }
+
             return;
+        }
+
+        // HPバー更新
+        if (IsDispHpBar)
+        {
+            HPBarMax.SetLeftHP(HP);
         }
     }
 

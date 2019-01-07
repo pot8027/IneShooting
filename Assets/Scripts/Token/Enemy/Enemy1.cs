@@ -4,41 +4,6 @@ using System.Collections;
 public class Enemy1 : Enemy
 {
     /// <summary>
-    /// 敵キャラの最大HPを取得
-    /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
-    /// </summary>
-    /// <returns>The hp.</returns>
-    protected override int GetMaxHP()
-    {
-        return 2;
-    }
-
-    /// <summary>
-    /// 個別処理用更新処理
-    /// </summary>
-    protected override void UpdateEach()
-    {
-        Vector2 min = GetWorldMin();
-        Vector2 max = GetWorldMax();
-
-        // 上下ではみ出したら跳ね返る
-        if (Y < min.y || max.y < Y)
-        {
-            ClampScreen();
-            VY *= -1;
-        }
-        // 左ではみ出したら消滅して終了
-        if (X < min.x)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        // HP0時の制御
-        base.UpdateEach();
-    }
-
-    /// <summary>
     /// コルーチン１
     /// </summary>
     /// <returns>The pdate1.</returns>

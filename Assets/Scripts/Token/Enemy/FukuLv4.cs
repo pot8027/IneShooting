@@ -4,72 +4,12 @@ using UnityEngine;
 
 public class FukuLv4 : Enemy
 {
-    private int MAX_HP = 2000;
-
-    /// <summary>
-    /// 敵キャラの最大HPを取得
-    /// 敵キャラごとに変更する場合はこのメソッドをオーバーライドして指定する
-    /// </summary>
-    /// <returns>The hp.</returns>
-    protected override int GetMaxHP()
-    {
-        return MAX_HP;
-    }
-
-    /// <summary>
-    /// 個別処理用更新処理
-    /// </summary>
-    protected override void UpdateEach()
-    {
-        Vector2 min = GetWorldMin();
-        Vector2 max = GetWorldMax();
-
-        // 上下ではみ出したら跳ね返る
-        if (Y < min.y || max.y < Y)
-        {
-            ClampScreen();
-            VY *= -1;
-        }
-
-        // HPバー更新
-        HPBarMax.SetLeftHP(HP);
-
-        // ヒットポイントがなくなっていれば消えて終了。
-        if (HP <= 0)
-        {
-            // TODO:消滅時パーティクルなど
-
-            // スコア追加
-            AddScore(GetScore());
-            Destroy(gameObject);
-
-            // ゲームクリア
-            GameManager.CurrentMode = GameManager.Mode.gameclear;
-            return;
-        }
-    }
-
-    /// <summary>
-    /// HPバーを表示するかどうか
-    /// </summary>
-    /// <returns><c>true</c>, if disp hp bar was ised, <c>false</c> otherwise.</returns>
-    protected override bool IsDispHpBar()
-    {
-        return true;
-    }
-
     /// <summary>
     /// 1
     /// </summary>
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate1()
     {
-        if (IsDispHpBar())
-        {
-            HPBarMax.Show();
-            HPBarMax.SetMaxHP((float)MAX_HP);
-        }
-
         SetVelocity(180, 3);
 
         while (true)
@@ -140,16 +80,5 @@ public class FukuLv4 : Enemy
                 break;
             }
         }
-    }
-
-    /// <summary>
-    /// 現在HPが指定割合以下かどうか判定
-    /// </summary>
-    /// <returns><c>true</c>, if under was hped, <c>false</c> otherwise.</returns>
-    /// <param name="targetRate">Target rate.</param>
-    private bool HpUnder(double targetRate)
-    {
-        double hpRate = (double)HP / (double)MAX_HP;
-        return hpRate <= targetRate;
     }
 }
