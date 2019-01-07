@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HPBarMax : MonoBehaviour
+public class HPBarMax : TokenController
 {
     private float HPMAX = 0;
     private float HP = 0;

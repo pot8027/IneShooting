@@ -32,7 +32,7 @@ public class FukuLv4 : Enemy
         }
 
         // HPバー更新
-        GameManager.HPBarMax.SetLeftHP(HP);
+        HPBarMax.SetLeftHP(HP);
 
         // ヒットポイントがなくなっていれば消えて終了。
         if (HP <= 0)
@@ -50,14 +50,25 @@ public class FukuLv4 : Enemy
     }
 
     /// <summary>
+    /// HPバーを表示するかどうか
+    /// </summary>
+    /// <returns><c>true</c>, if disp hp bar was ised, <c>false</c> otherwise.</returns>
+    protected override bool IsDispHpBar()
+    {
+        return true;
+    }
+
+    /// <summary>
     /// 1
     /// </summary>
     /// <returns>The pdate1.</returns>
     IEnumerator IEUpdate1()
     {
-        // HPバー表示
-        GameManager.HPBarMax.Show();
-        GameManager.HPBarMax.SetMaxHP((float)MAX_HP);
+        if (IsDispHpBar())
+        {
+            HPBarMax.Show();
+            HPBarMax.SetMaxHP((float)MAX_HP);
+        }
 
         SetVelocity(180, 3);
 

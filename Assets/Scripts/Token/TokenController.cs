@@ -637,4 +637,33 @@ public class TokenController : TokenProperty
         gameObject.SetActive(false);
         Exists = false;
     }
+
+    /// <summary>
+    /// HPバーを表示するかどうか
+    /// </summary>
+    /// <returns><c>true</c>, if disp hp bar was ised, <c>false</c> otherwise.</returns>
+    protected virtual bool IsDispHpBar()
+    {
+        return false;
+    }
+
+    /// <summary>
+    /// HPバー
+    /// </summary>
+    protected HPBarMax _hpBarMax = null;
+    protected HPBarMax HPBarMax
+    {
+        get
+        {
+            if (_hpBarMax == null)
+            {
+                GameObject prefub = Resources.Load("Prefabs/" + "HPBarMax") as GameObject;
+                GameObject g = Object.Instantiate(prefub, new Vector3(X, Y + 0.1f + SpriteHeight / 2, 0), Quaternion.identity);
+                g.transform.parent = this.transform;
+                _hpBarMax = g.GetComponent<HPBarMax>();
+            }
+
+            return _hpBarMax;
+        }
+    }
 }
