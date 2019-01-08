@@ -9,16 +9,26 @@ public class HPBarMax : TokenController
 
     private HPBarLeft _hpBarLeft = null;
 
+    /// <summary>
+    /// 非表示
+    /// </summary>
     public void Hide()
     {
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 表示
+    /// </summary>
     public void Show()
     {
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// 最大HPセット
+    /// </summary>
+    /// <param name="max">Max.</param>
     public void SetMaxHP(float max)
     {
         HPMAX = max;
@@ -26,6 +36,19 @@ public class HPBarMax : TokenController
         SetLeftHP(CurrentHP);
     }
 
+    public void SetSpriteX(float parentSpriteX)
+    {
+        // ボツ
+        //float rate = parentSpriteX / Renderer.bounds.size.x;
+        //float calcX = Renderer.bounds.size.x * rate;
+
+        //transform.localScale = new Vector3(calcX, Renderer.bounds.size.y, 1);
+    }
+
+    /// <summary>
+    /// 現在HPセット
+    /// </summary>
+    /// <param name="leftHP">Left hp.</param>
     public void SetLeftHP(float leftHP)
     {
         if (_hpBarLeft == null)

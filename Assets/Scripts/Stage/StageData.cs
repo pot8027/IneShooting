@@ -8,15 +8,17 @@ public class StageData
     public static readonly string TYPE_FRAME = "F";
 
     /****************************
-     * 0 プレハブ名
-     * 1 X位置
-     * 2 Y位置
-     * 3 HP
-     * 4 HPバー表示
-     * 5 スコア
-     * 6 撃破時ゲームクリアフラグ
-     * 7 撃破時遷移先フレーム
-     * 8 撃破時生成プレハブ    
+     * 0 フレーム
+     * 1 データタイプ    
+     * 2 プレハブ名
+     * 3 X位置
+     * 4 Y位置
+     * 5 HP
+     * 6 HPバー表示
+     * 7 スコア
+     * 8 撃破時ゲームクリアフラグ
+     * 9 撃破時遷移先フレーム
+     * 10 撃破時生成プレハブ    
     *****************************/   
 
     /// <summary>
@@ -119,45 +121,44 @@ public class StageData
         // プレハブ用データ作成
         if (TYPE_PREFUB.Equals(result.DataType))
         {
-            string[] prefubDatas = datas[2].Split(':');
-            result.PrefubName = prefubDatas[0];
-            result.PointX = float.Parse(prefubDatas[1]);
-            result.PointY = float.Parse(prefubDatas[2]);
+            result.PrefubName = datas[2];
+            result.PointX = float.Parse(datas[3]);
+            result.PointY = float.Parse(datas[4]);
 
             // HP
-            if (!string.IsNullOrEmpty(prefubDatas[3]))
+            if (!string.IsNullOrEmpty(datas[5]))
             {
-                result.Hp = int.Parse(prefubDatas[3]);
+                result.Hp = int.Parse(datas[5]);
             }
 
             // HPバーを表示するかどうか
-            if ("1".Equals(prefubDatas[4]))
+            if ("1".Equals(datas[6]))
             {
                 result.IsDispHP = true;
             }
 
             // スコア
-            if (!string.IsNullOrEmpty(prefubDatas[5]))
+            if (!string.IsNullOrEmpty(datas[7]))
             {
-                result.Score = int.Parse(prefubDatas[5]);
+                result.Score = int.Parse(datas[7]);
             }
 
             // 撃破時ゲームクリアフラグ
-            if ("1".Equals(prefubDatas[6]))
+            if ("1".Equals(datas[8]))
             {
                 result.FlgGameClear = true;
             }
 
             // 撃破時ジャンプ先フレーム
-            if (!string.IsNullOrEmpty(prefubDatas[7]))
+            if (!string.IsNullOrEmpty(datas[9]))
             {
-                result.JumpFrame = long.Parse(prefubDatas[7]);
+                result.JumpFrame = long.Parse(datas[9]);
             }
 
             // 撃破時生成プレハブ名
-            if (!string.IsNullOrEmpty(prefubDatas[8]))
+            if (!"NULL".Equals(datas[10]))
             {
-                result.GeneratePrefubName = prefubDatas[8];
+                result.GeneratePrefubName = datas[10];
             }
         }
 

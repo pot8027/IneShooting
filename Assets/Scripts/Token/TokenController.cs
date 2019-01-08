@@ -27,6 +27,7 @@ public class TokenController : TokenProperty
         {
             HPBarMax.Show();
             HPBarMax.SetMaxHP(HP);
+            HPBarMax.SetSpriteX(Renderer.bounds.size.x);
         }
     }
 

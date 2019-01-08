@@ -39,7 +39,6 @@ public class StageDataReader
                     continue;
                 }
 
-                // ID、プレハブ名、X座標、Y座標
                 float frame = float.Parse(values[0].Trim());
                 StageData stageData = StageData.CreateInstance(line);
                 _stageDataDictionary.Add(frame, stageData);
