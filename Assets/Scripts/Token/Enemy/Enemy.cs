@@ -10,11 +10,22 @@ public class Enemy : TokenController
     private static Player _target = null;
 
     /// <summary>
+    /// 無敵フラグ
+    /// </summary>
+    protected bool _isMuteki = false;
+
+    /// <summary>
     /// ダメージを与える
     /// </summary>
     /// <param name="damage">Damage.</param>
     public virtual void AddDamage(int damage)
     {
+        // 無敵中ならダメージを受けない
+        if (_isMuteki)
+        {
+            return;
+        }
+
         HP -= damage;
     }
 
@@ -121,6 +132,23 @@ public class Enemy : TokenController
 
         float dx = _target.X - X;
         float dy = _target.Y - Y;
+        return Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
+    }
+
+    /// <summary>
+    /// プレイヤーとの指定位置での角度を取得
+    /// </summary>
+    /// <returns>The target aim.</returns>
+    protected float GetTargetAim(float pointX, float pointY)
+    {
+        // プレイヤーが見つからない場合は直進
+        if (FindPlayer() == false)
+        {
+            return 180;
+        }
+
+        float dx = _target.X - pointX;
+        float dy = _target.Y - pointY;
         return Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
     }
 

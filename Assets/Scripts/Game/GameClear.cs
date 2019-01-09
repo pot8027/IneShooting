@@ -5,10 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class GameClear : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject gameclear1 = null;
+    public GameObject gameclear2 = null;
+
     void Start()
     {
-        
+        gameclear1.SetActive(false);
+        gameclear2.SetActive(false);
+
+        int num = GameManager.StageNo;
+
+        if (num == 5)
+        {
+            gameclear2.SetActive(true);
+        }
+        else
+        {
+            gameclear1.SetActive(true);
+        }
     }
 
     // Update is called once per frame

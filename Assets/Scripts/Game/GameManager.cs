@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static int StageNo
     {
         set { _stageNo = value; }
+        get { return _stageNo; }
     }
 
     /// <summary>
