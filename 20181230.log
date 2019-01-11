@@ -1,2 +1,0 @@
-﻿[2018/12/30 13:56:29¥tSystem.IndexOutOfRangeException: Index was outside the bounds of the array.
-  at StageDataReader.Load (System.String textName) [0x0008d] in /Volumes/E-Drive/Unity/IneShooting/Assets/Scripts/Stage/StageDataReader.cs:46 
