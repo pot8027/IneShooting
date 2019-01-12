@@ -2,7 +2,12 @@ var TwitterPlugin = {
 
     OpenNewWindow:  function(openUrl) {
         var url = Pointer_stringify(openUrl);
-        window.open(url, "TweetWindow");
+        document.onmouseup = function()
+        {
+            window.open(url);
+            document.onmouseup = null;
+        }
+        console.log("aaa");
     }
 };
 

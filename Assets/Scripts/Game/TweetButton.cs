@@ -11,7 +11,7 @@ public class TweetButton : MonoBehaviour
 {
     [DllImport("__Internal")] private static extern void OpenNewWindow(string url);
 
-    public void OnClick()
+    public void OnPointerDown()
     {
 #if UNITY_EDITOR
         Application.OpenURL(CreateTweetURL());
