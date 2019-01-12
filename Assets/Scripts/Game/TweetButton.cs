@@ -1,14 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Runtime.InteropServices;
+
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Text;
+
 
 public class TweetButton : MonoBehaviour
 {
+    [DllImport("__Internal")] private static extern void OpenNewWindow(string url);
+
     public void OnClick()
     {
+#if UNITY_EDITOR
         Application.OpenURL(CreateTweetURL());
+#else
+        OpenNewWindow(CreateTweetURL());
+#endif
     }
 
     private string CreateTweetURL()
