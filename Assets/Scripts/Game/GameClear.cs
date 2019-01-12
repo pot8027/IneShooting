@@ -7,6 +7,8 @@ public class GameClear : MonoBehaviour
 {
     public GameObject gameclear1 = null;
     public GameObject gameclear2 = null;
+    public GameObject level = null;
+    public GameObject score = null;
 
     void Start()
     {
@@ -23,6 +25,9 @@ public class GameClear : MonoBehaviour
         {
             gameclear1.SetActive(true);
         }
+
+        level.GetComponent<CommonText>().SetText(GameManager.StageNo.ToString());
+        score.GetComponent<CommonText>().SetText(GameManager.Score.ToString());
     }
 
     // Update is called once per frame
