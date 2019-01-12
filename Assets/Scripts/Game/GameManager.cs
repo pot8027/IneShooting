@@ -5,12 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public Score _scoreText = null;
+
     // TODO:ゲーム共通変数管理クラスに移行する
     private static int _stageNo = 1;
     public static int StageNo
     {
         set { _stageNo = value; }
         get { return _stageNo; }
+    }
+
+    // クリア後表示用スコア
+    private static float _score = 0;
+    public static float Score
+    {
+        set { _score = value; }
+        get { return _score; }
     }
 
     /// <summary>
@@ -70,6 +80,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // スコア初期化
+        _score = 0;
+
         // フレーム初期化
         _frameCount = 0;
 
@@ -108,6 +121,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case Mode.gameclear:
+
+                // スコア保持
+                _score = _scoreText.GetScore();
                 SceneManager.LoadScene("GameClear");
                 return;
 
