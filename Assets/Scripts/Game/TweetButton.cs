@@ -47,7 +47,7 @@ public class TweetButton : MonoBehaviour
     {
         StringBuilder sb = new StringBuilder();
 
-        sb.Append("稲ジューティングクリア！！");
+        sb.Append("稲シューティングクリア！！");
 
         // レベル
         int level = GameManager.StageNo;
