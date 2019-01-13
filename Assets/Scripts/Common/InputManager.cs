@@ -91,6 +91,52 @@ public class InputManager
         return false;
     }
 
+
+    /// <summary>
+    /// システム稲キー押下中判定
+    /// </summary>
+    /// <returns><c>true</c>, if key circle was gotten, <c>false</c> otherwise.</returns>
+    public static bool IsInputSquare()
+    {
+        // JOYPAD
+        if (Input.GetKey(KeyCode.JoystickButton3))
+        {
+            return true;
+        }
+
+        // キーボード
+        if (Input.GetKey(KeyCode.S))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// システム稲キー押下判定
+    /// </summary>
+    /// <returns><c>true</c>, if key circle down was gotten, <c>false</c> otherwise.</returns>
+    public static bool IsKeyDownSquare()
+    {
+        // JOYPAD
+        if (Input.GetKeyDown(KeyCode.JoystickButton3))
+        {
+            return true;
+        }
+
+        // キーボード
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+
     /// <summary>
     /// 涼さんキー押下判定
     /// </summary>

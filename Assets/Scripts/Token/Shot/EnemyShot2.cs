@@ -94,7 +94,7 @@ public class EnemyShot2 : EnemyShot
         if (LayerConstant.PLAYER.Equals(layerName))
         {
             Player p = collision.gameObject.GetComponent<Player>();
-            p.DestroyPlayer();
+            p.Damage();
             Vanish();
         }
     }

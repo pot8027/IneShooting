@@ -5,6 +5,38 @@ using UnityEngine;
 public class Player : TokenController
 {
     /// <summary>
+    /// 稲モード
+    /// </summary>
+    enum IneMode
+    {
+        Normal = 0,
+        Lv1 = 1,
+        Lv2 = 2
+    }
+
+    /// <summary>
+    /// 稲パワー閾値
+    /// </summary>
+    enum InePower
+    {
+        Lv2 = 2000,
+        Lv1 = 1000
+    }
+
+    /// <summary>
+    /// 現在稲モード
+    /// </summary>
+    private IneMode _ineMode = IneMode.Normal;
+
+    // 最大稲パワー
+    private static readonly int INE_POWER_MAX = 3000;
+
+    /// <summary>
+    /// 稲パワー
+    /// </summary>
+    private int _inePower = 0;
+
+    /// <summary>
     /// 残りボム数
     /// </summary>
     private int _bombCount = 4;
@@ -61,11 +93,17 @@ public class Player : TokenController
     }
 
     /// <summary>
-    /// プレイヤーを破棄
+    /// 被ダメージ
     /// </summary>
-    public void DestroyPlayer()
+    public void Damage()
     {
-        // 涼さんが入れば１基消滅
+        // システム稲起動中は無敵
+        if (IsSystemIne())
+        {
+            return;
+        }
+
+        // 涼さんがいれば１基消滅
         RemoveRyo();
 
         // ボムが残っていたらボムを使って終了
@@ -75,6 +113,7 @@ public class Player : TokenController
             return;
         }
 
+        // 自分を破棄してゲームオーバー
         DestroyObj();
         GameManager.CurrentMode = GameManager.Mode.gameover;
     }
@@ -84,10 +123,14 @@ public class Player : TokenController
     {
         InitSize();
 
+        // ショット
         StartCoroutine("IEPlayerShot");
+
+        // 涼さんバリア用角度更新
         StartCoroutine("IEAngleUpdate");
 
-        StartCoroutine("IECreateShadow");
+        // 稲パワーチャージ
+        StartCoroutine("IEInePowerCharge");
     }
 
     /// <summary>
@@ -97,6 +140,10 @@ public class Player : TokenController
     {
         // ボム残り
         SetLeftBomb(_bombCount);
+
+        // 稲パワー表示更新
+        UpdateInePowerDisplay();
+        UpdateInePowerStatusDisplay();
 
         // キー入力で移動
         Vector2 v = AppUtil.GetInputVector();
@@ -108,9 +155,17 @@ public class Player : TokenController
         {
             Bomb();
         }
+
+        // システム稲
+        if (InputManager.IsKeyDownSquare())
+        {
+            LaunchSystemIne();
+        }
     }
 
-
+    /// <summary>
+    /// 残稲ボムテキスト
+    /// </summary>
     private LeftBomb _leftBombText = null;
     private void SetLeftBomb(int left)
     {
@@ -119,6 +174,59 @@ public class Player : TokenController
             _leftBombText = GameObject.Find("LeftBomb").GetComponent<LeftBomb>();
         }
         _leftBombText.SetLeft(left);
+    }
+
+    /// <summary>
+    /// 稲パワーテキスト
+    /// </summary>
+    private CommonText _inePowerText = null;
+    private void UpdateInePowerDisplay()
+    {
+        // 稲パワーテキスト
+        if (_inePowerText == null)
+        {
+            _inePowerText = GameObject.Find("InePower").GetComponent<CommonText>();
+        }
+        _inePowerText.SetText(_inePower.ToString());
+    }
+
+    /// <summary>
+    /// 稲パワー状態テキスト
+    /// </summary>
+    private CommonText _inePowerStatusText = null;
+    private void UpdateInePowerStatusDisplay()
+    {
+        // 稲パワー状態テキスト
+        if (_inePowerStatusText == null)
+        {
+            _inePowerStatusText = GameObject.Find("LInePowerExplain").GetComponent<CommonText>();
+        }
+
+        // 稲パワー発動中
+        if (IsSystemIne())
+        {
+            _inePowerStatusText.SetText("スーパー稲" + _ineMode.ToString() + "発動中");
+        }
+
+        // 稲パワー未発動
+        else
+        {
+            if (_inePower >= (int)InePower.Lv2)
+            {
+                _inePowerStatusText.SetText("スーパー稲" + IneMode.Lv2.ToString() + "発動可能");
+            }
+
+            else if (_inePower >= (int)InePower.Lv1)
+            {
+                _inePowerStatusText.SetText("スーパー稲" + IneMode.Lv1.ToString() + "発動可能");
+            }
+
+            else
+            {
+                _inePowerStatusText.SetText(string.Empty);
+            }
+
+        }
     }
 
     /// <summary>
@@ -169,6 +277,30 @@ public class Player : TokenController
     }
 
     /// <summary>
+    /// システム稲発動
+    /// </summary>
+    private void LaunchSystemIne()
+    {
+        // システム稲中は発動しない
+        if (IsSystemIne())
+        {
+            return;
+        }
+
+        // システム稲：LV2
+        if (_inePower >= (int)InePower.Lv2)
+        {
+            StartCoroutine("IESystemIneLv2");
+        }
+
+        // システム稲：LV1
+        else if (_inePower >= (int)InePower.Lv1)
+        {
+            StartCoroutine("IESystemIneLv1");
+        }
+    }
+
+    /// <summary>
     /// 衝突時イベント
     /// </summary>
     /// <param name="collision">Collision.</param>
@@ -210,6 +342,49 @@ public class Player : TokenController
         }
     }
 
+    /// <summary>
+    /// システム稲起動中判定
+    /// </summary>
+    /// <returns><c>true</c>, if system ine was ised, <c>false</c> otherwise.</returns>
+    private bool IsSystemIne()
+    {
+        return _ineMode >= IneMode.Lv1;
+    }
+
+    /// <summary>
+    /// ショット
+    /// </summary>
+    private void Shot()
+    {
+        // 稲モード：LV1
+        if (_ineMode == IneMode.Lv1)
+        {
+            PlayerShot2.Add(X + 0.4f, Y + 0.2f, 0.0f, 15.0f);
+            PlayerShot2.Add(X + 0.4f, Y - 0.2f, 0.0f, 15.0f);
+        }
+
+        // 稲モード：LV2
+        else if (_ineMode == IneMode.Lv2)
+        {
+            PlayerShot.Add(X + 0.3f, Y + 0.2f, 0.0f, 20.0f);
+            PlayerShot2.Add(X + 0.4f, Y + 0.1f, 0.0f, 20.0f);
+            PlayerShot2.Add(X + 0.5f, Y, 0.0f, 20.0f);
+            PlayerShot2.Add(X + 0.4f, Y - 0.1f, 0.0f, 20.0f);
+            PlayerShot.Add(X + 0.3f, Y - 0.2f, 0.0f, 20.0f);
+        }
+
+        // 稲モード：通常
+        else
+        {
+            PlayerShot.Add(X + 0.4f, Y + 0.2f, 0.0f, 15.0f);
+            PlayerShot.Add(X + 0.4f, Y - 0.2f, 0.0f, 15.0f);
+        }
+    }
+
+    /// <summary>
+    /// ショット
+    /// </summary>
+    /// <returns>The layer shot.</returns>
     IEnumerator IEPlayerShot()
     {
         while(true)
@@ -219,12 +394,15 @@ public class Player : TokenController
             // キー入力で弾
             if (InputManager.IsInputCircle())
             {
-                PlayerShot.Add(X + 0.4f, Y + 0.2f, 0.0f, 15.0f);
-                PlayerShot.Add(X + 0.4f, Y - 0.2f, 0.0f, 15.0f);
+                Shot();
             }
         }
     }
 
+    /// <summary>
+    /// 涼さんバリア用角度更
+    /// </summary>
+    /// <returns>The ngle update.</returns>
     IEnumerator IEAngleUpdate()
     {
         while (true)
@@ -242,13 +420,86 @@ public class Player : TokenController
         }
     }
 
-    IEnumerator IECreateShadow()
+    /// <summary>
+    /// 稲パワーをチャージ.常時発動
+    /// </summary>
+    /// <returns>The ne power charge.</returns>
+    IEnumerator IEInePowerCharge()
     {
-        GameObject g = Resources.Load("Prefabs/" + "PlayerShadow") as GameObject;
         while (true)
         {
             yield return new WaitForSeconds(0.01f);
-            Object.Instantiate(g, new Vector3(X, Y, 0), Quaternion.identity);
+
+            // システム稲起動中はチャージしない
+            if (IsSystemIne())
+            {
+                continue;
+            }
+
+            // 稲パワーマックスならチャージしない
+            if (_inePower >= INE_POWER_MAX)
+            {
+                continue;
+            }
+
+            // 稲パワー増加
+            _inePower++;
         }
+    }
+
+    /// <summary>
+    /// システム稲LV1. システム稲起動中のみ
+    /// </summary>
+    /// <returns>The ystem ine.</returns>
+    IEnumerator IESystemIneLv1()
+    {
+        _ineMode = IneMode.Lv1;
+        Color defColor = Renderer.color;
+        Renderer.color = Color.red;
+
+        GameObject g = Resources.Load("Prefabs/" + "PlayerShadow") as GameObject;
+
+        // 稲パワーがある間
+        while (_inePower > 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            // 稲のシャドウ
+            Object.Instantiate(g, new Vector3(X, Y, 0), Quaternion.identity);
+
+            // 稲パワー減少
+            _inePower -= 4;
+        }
+
+        Renderer.color = defColor;
+        _ineMode = IneMode.Normal;
+    }
+
+    /// <summary>
+    /// システム稲LV2. システム稲起動中のみ
+    /// </summary>
+    /// <returns>The ystem ine.</returns>
+    IEnumerator IESystemIneLv2()
+    {
+        _ineMode = IneMode.Lv2;
+        Color defColor = Renderer.color;
+        Renderer.color = Color.yellow;
+
+        GameObject g = Resources.Load("Prefabs/" + "PlayerShadow") as GameObject;
+
+        // 稲パワーがある間
+        while (_inePower > 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            // 稲のシャドウ
+            Object.Instantiate(g, new Vector3(X, Y, 0), Quaternion.identity);
+
+            // 稲パワー減少
+            _inePower -= 10;
+        }
+
+        Renderer.color = defColor;
+        _ineMode = IneMode.Normal;
     }
 }

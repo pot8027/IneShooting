@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShot1 : EnemyShot
+public class PlayerShot2 : TokenController
 {
     /// <summary>
     /// プレハブ名
     /// </summary>
-    private static readonly string PREFUB_NAME = "EnemyShot1";
+    private static readonly string PREFUB_NAME = "PlayerShot2";
 
     /// <summary>
     /// インスタンスリスト
     /// </summary>
-    private static TokenManager<EnemyShot1> _parent = null;
+    private static TokenManager<PlayerShot2> _parent = null;
 
     /// <summary>
     /// インスタンスリストを作成します
@@ -20,7 +20,7 @@ public class EnemyShot1 : EnemyShot
     /// <param name="size">リストサイズ</param>
     public static void InitTokenManager(int size)
     {
-        _parent = new TokenManager<EnemyShot1>(PREFUB_NAME, size);
+        _parent = new TokenManager<PlayerShot2>(PREFUB_NAME, size);
     }
 
     /// <summary>
@@ -31,21 +31,13 @@ public class EnemyShot1 : EnemyShot
     /// <param name="y">The y coordinate.</param>
     /// <param name="direction">Direction.</param>
     /// <param name="speed">Speed.</param>
-    public static EnemyShot1 Add(float x, float y, float direction, float speed)
+    public static PlayerShot2 Add(float x, float y, float direction, float speed)
     {
         if (_parent == null)
         {
             return null;
         }
         return _parent.Add(x, y, direction, speed);
-    }
-
-    /// <summary>
-    /// 各トークンを破棄
-    /// </summary>
-    public static void VanishEachToken()
-    {
-        _parent.FuncForEachExist(n => n.Vanish());
     }
 
     /// <summary>
@@ -78,11 +70,19 @@ public class EnemyShot1 : EnemyShot
 
         string layerName = LayerMask.LayerToName(collision.gameObject.layer);
 
-        // プレイヤ
-        if (LayerConstant.PLAYER.Equals(layerName))
+        // 敵
+        if (LayerConstant.ENEMY.Equals(layerName))
         {
-            Player p = collision.gameObject.GetComponent<Player>();
-            p.Damage();
+            Enemy e = collision.gameObject.GetComponent<Enemy>();
+            e.AddDamage(3);
+
+            Vanish();
+        }
+        else if (LayerConstant.ENEMY_SHOT_BREAKABLE.Equals(layerName))
+        {
+            EnemyShot2 e = collision.gameObject.GetComponent<EnemyShot2>();
+            e.Vanish();
+
             Vanish();
         }
     }
