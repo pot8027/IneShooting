@@ -87,11 +87,7 @@ public class Player : TokenController
         StartCoroutine("IEPlayerShot");
         StartCoroutine("IEAngleUpdate");
 
-        // デバッグ用涼さん追加
-        //for (int i = 0; i < MAX_RYO; i++)
-        //{
-        //    AddRyo();
-        //}
+        StartCoroutine("IECreateShadow");
     }
 
     /// <summary>
@@ -243,6 +239,16 @@ public class Player : TokenController
             {
                 _currentAngle = 0;
             }
+        }
+    }
+
+    IEnumerator IECreateShadow()
+    {
+        GameObject g = Resources.Load("Prefabs/" + "PlayerShadow") as GameObject;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.01f);
+            Object.Instantiate(g, new Vector3(X, Y, 0), Quaternion.identity);
         }
     }
 }

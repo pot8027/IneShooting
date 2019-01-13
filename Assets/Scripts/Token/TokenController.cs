@@ -336,6 +336,15 @@ public class TokenController : TokenProperty
     }
 
     /// <summary>
+    /// アルファ値をかける
+    /// </summary>
+    /// <param name="d">D.</param>
+    public void MulAlpha(float d)
+    {
+        Alpha *= d;
+    }
+
+    /// <summary>
     /// 移動量を設定.
     /// </summary>
     /// <param name="direction">Direction.</param>
