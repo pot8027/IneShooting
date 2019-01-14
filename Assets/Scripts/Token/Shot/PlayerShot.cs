@@ -80,8 +80,11 @@ public class PlayerShot : TokenController
         } 
         else if (LayerConstant.ENEMY_SHOT_BREAKABLE.Equals(layerName))
         {
-            EnemyShot2 e = collision.gameObject.GetComponent<EnemyShot2>();
+            TokenController e = collision.gameObject.GetComponent<TokenController>();
             e.Vanish();
+
+            // スコアつけとこう
+            AddScore(10);
 
             Vanish();
         }
