@@ -28,8 +28,11 @@ public class Player : TokenController
     /// </summary>
     private IneMode _ineMode = IneMode.Normal;
 
-    // 最大稲パワー
+    // 稲パワー最大
     private static readonly int INE_POWER_MAX = 3000;
+
+    // 稲パワーチャージ速度
+    private static readonly int INE_POWER_CHARGE_SPEED = 3;
 
     /// <summary>
     /// 稲パワー
@@ -40,6 +43,11 @@ public class Player : TokenController
     /// 残りボム数
     /// </summary>
     private int _bombCount = 4;
+
+    /// <summary>
+    /// 非ダメージ中フラグ
+    /// </summary>
+    private bool _isDamaged = false;
 
     /// <summary>
     /// プレハブ名
@@ -102,6 +110,15 @@ public class Player : TokenController
         {
             return;
         }
+
+        // 被ダメ中は処理しない
+        if (_isDamaged)
+        {
+            return;
+        }
+
+        // 被ダメコルーチン開始
+        StartCoroutine("IEDamaged");
 
         // 涼さんがいれば１基消滅
         RemoveRyo();
@@ -340,6 +357,12 @@ public class Player : TokenController
                 Destroy(collision.gameObject);
             }
         }
+
+        // 敵
+        else if (LayerConstant.ENEMY.Equals(layerName))
+        {
+            Damage();
+        }
     }
 
     /// <summary>
@@ -382,7 +405,28 @@ public class Player : TokenController
     }
 
     /// <summary>
-    /// ショット
+    /// 被ダメ時コルーチン
+    /// </summary>
+    /// <returns>The amaged.</returns>
+    IEnumerator IEDamaged()
+    {
+        _isDamaged = true;
+
+        float defAlpha = Alpha;
+
+        for (int i = 0; i < 60; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            Alpha = 0.2f;
+            yield return new WaitForSeconds(0.01f);
+            Alpha = defAlpha;
+        }
+
+        _isDamaged = false;
+    }
+
+    /// <summary>
+    /// ショットコルーチン
     /// </summary>
     /// <returns>The layer shot.</returns>
     IEnumerator IEPlayerShot()
@@ -400,7 +444,7 @@ public class Player : TokenController
     }
 
     /// <summary>
-    /// 涼さんバリア用角度更
+    /// 涼さんバリア用角度更コルーチン
     /// </summary>
     /// <returns>The ngle update.</returns>
     IEnumerator IEAngleUpdate()
@@ -421,7 +465,7 @@ public class Player : TokenController
     }
 
     /// <summary>
-    /// 稲パワーをチャージ.常時発動
+    /// 稲パワーをチャージコルーチン.常時発動
     /// </summary>
     /// <returns>The ne power charge.</returns>
     IEnumerator IEInePowerCharge()
@@ -443,12 +487,16 @@ public class Player : TokenController
             }
 
             // 稲パワー増加
-            _inePower++;
+            _inePower += INE_POWER_CHARGE_SPEED;
+            if (_inePower >= INE_POWER_MAX)
+            {
+                _inePower = INE_POWER_MAX;
+            }
         }
     }
 
     /// <summary>
-    /// システム稲LV1. システム稲起動中のみ
+    /// システム稲LV1コルーチン. システム稲起動中のみ
     /// </summary>
     /// <returns>The ystem ine.</returns>
     IEnumerator IESystemIneLv1()
@@ -476,7 +524,7 @@ public class Player : TokenController
     }
 
     /// <summary>
-    /// システム稲LV2. システム稲起動中のみ
+    /// システム稲LV2コルーチン. システム稲起動中のみ
     /// </summary>
     /// <returns>The ystem ine.</returns>
     IEnumerator IESystemIneLv2()
